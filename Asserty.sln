@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asserty", "src\Asserty\Asserty.csproj", "{90241E97-370D-423E-8224-DF1BB749FBCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A564C69C-53B9-42A3-A441-4946BC7F6A97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{35FBEFEA-16E9-47E2-97B0-FD116C334EC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asserty.Tests", "tests\Asserty.Tests\Asserty.Tests.csproj", "{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90241E97-370D-423E-8224-DF1BB749FBCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90241E97-370D-423E-8224-DF1BB749FBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90241E97-370D-423E-8224-DF1BB749FBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90241E97-370D-423E-8224-DF1BB749FBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90241E97-370D-423E-8224-DF1BB749FBCE} = {A564C69C-53B9-42A3-A441-4946BC7F6A97}
+		{28D3BC27-763A-487A-AAE2-2A5DE7A9BF1D} = {35FBEFEA-16E9-47E2-97B0-FD116C334EC3}
+	EndGlobalSection
+EndGlobal
