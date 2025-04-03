@@ -4,13 +4,14 @@ namespace Asserty;
 
 public static partial class AssertionSubjectExtensions
 {
-    public static void Contain(
+    public static IAssertionResult<string?> Contain(
         this IAssertionSubject<string?> subject,
         string substring,
         StringComparison comparisonType = StringComparison.Ordinal)
     {
-        new StringContainAssertion(substring, comparisonType).Execute(subject);
+        return new StringContainAssertion(substring, comparisonType).Execute(subject);
     }
+
     private class StringContainAssertion(string substring, StringComparison comparisonType) : IAssertion<string?>
     {
         public bool IsVerified(string? actualValue) =>

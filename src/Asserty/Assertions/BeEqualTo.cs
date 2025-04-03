@@ -4,9 +4,9 @@ namespace Asserty;
 
 public static partial class AssertionSubjectExtensions
 {
-    public static void BeEqualTo<T>(this IAssertionSubject<T> subject, T expectedValue, IEqualityComparer<T>? equalityComparer = null)
+    public static IAssertionResult<T> BeEqualTo<T>(this IAssertionSubject<T> subject, T expectedValue, IEqualityComparer<T>? equalityComparer = null)
     {
-        new BeEqualAssertion<T>(expectedValue, equalityComparer).Execute(subject);
+        return new BeEqualAssertion<T>(expectedValue, equalityComparer).Execute(subject);
     }
 
     internal class BeEqualAssertion<T>(T expectedValue, IEqualityComparer<T>? equalityComparer) : IAssertion<T>

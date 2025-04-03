@@ -1,5 +1,3 @@
 ﻿namespace Asserty;
 
-public interface INegativeAssertionSubject<out T> : IAssertionSubject<T>
-{
-}
+public interface INegativeAssertionSubject<out T> : IAssertionSubject<T>;

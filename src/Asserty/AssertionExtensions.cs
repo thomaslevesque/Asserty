@@ -1,8 +1,10 @@
-﻿namespace Asserty;
+﻿using Asserty.Internal;
+
+namespace Asserty;
 
 public static class AssertionExtensions
 {
-    public static void Execute<T>(this IAssertion<T> assertion, IAssertionSubject<T> subject)
+    public static IAssertionResult<T> Execute<T>(this IAssertion<T> assertion, IAssertionSubject<T> subject)
     {
         if (subject is INegativeAssertionSubject<T>)
             assertion = assertion.GetNegativeAssertion();
@@ -13,6 +15,8 @@ public static class AssertionExtensions
             var message = CreateAssertionFailureMessage(assertion, subject);
             throw new AssertionException(message);
         }
+
+        return new AssertionResult<T>(subject);
     }
 
     private static string CreateAssertionFailureMessage<T>(IAssertion<T> assertion, IAssertionSubject<T> subject)
