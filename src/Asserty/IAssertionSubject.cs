@@ -6,4 +6,6 @@ public interface IAssertionSubject<out T> : IHideObjectMembers
     string Expression { get; }
 
     IAssertionResult<T> Verify(IAssertion<T> assertion);
+
+    IAssertionSubject<TResult> Cast<TResult>();
 }

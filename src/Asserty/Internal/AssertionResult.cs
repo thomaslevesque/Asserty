@@ -2,11 +2,7 @@
 
 internal class AssertionResult<T>(IAssertionSubject<T> subject) : IAssertionResult<T>
 {
-    public IPositiveAssertionSubject<T> And => EnsurePositive(subject);
+    public IPositiveAssertionSubject<T> And => subject.EnsurePositive();
 
-    private static IPositiveAssertionSubject<T> EnsurePositive(IAssertionSubject<T> subject)
-    {
-        return subject as IPositiveAssertionSubject<T>
-               ?? new PositiveAssertionSubject<T>(subject.Value, subject.Expression);
-    }
+    public IAssertionResult<TResult> Cast<TResult>() => new CastAssertionResult<T, TResult>(subject);
 }

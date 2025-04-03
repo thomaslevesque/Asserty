@@ -6,4 +6,7 @@ internal record PositiveAssertionSubject<T>(T Value, string Expression) : IPosit
         AssertionHelper.Verify(assertion, this);
 
     public INegativeAssertionSubject<T> Not => new NegativeAssertionSubject<T>(Value, Expression);
+
+    public IAssertionSubject<TResult> Cast<TResult>() =>
+        new PositiveAssertionSubject<TResult>((TResult)(object)Value!, Expression);
 }
