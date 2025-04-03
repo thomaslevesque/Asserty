@@ -9,7 +9,7 @@ public static partial class AssertionSubjectExtensions
         string substring,
         StringComparison comparisonType = StringComparison.Ordinal)
     {
-        AssertionHelpers.Assert(subject, new StringContainAssertion(substring, comparisonType));
+        new StringContainAssertion(substring, comparisonType).Execute(subject);
     }
     private class StringContainAssertion(string substring, StringComparison comparisonType) : IAssertion<string?>
     {

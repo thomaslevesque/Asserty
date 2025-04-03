@@ -1,10 +1,8 @@
 ﻿namespace Asserty;
 
-public static class AssertionHelpers
+public static class AssertionExtensions
 {
-    public static void Assert<T>(
-        IAssertionSubject<T> subject,
-        IAssertion<T> assertion)
+    public static void Execute<T>(this IAssertion<T> assertion, IAssertionSubject<T> subject)
     {
         if (subject is INegativeAssertionSubject<T>)
             assertion = assertion.GetNegativeAssertion();
