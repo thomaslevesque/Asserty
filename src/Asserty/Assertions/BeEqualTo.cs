@@ -6,7 +6,7 @@ public static partial class AssertionSubjectExtensions
 {
     public static IAssertionResult<T> BeEqualTo<T>(this IAssertionSubject<T> subject, T expectedValue, IEqualityComparer<T>? equalityComparer = null)
     {
-        return new BeEqualAssertion<T>(expectedValue, equalityComparer).Execute(subject);
+        return subject.Verify(new BeEqualAssertion<T>(expectedValue, equalityComparer));
     }
 
     internal class BeEqualAssertion<T>(T expectedValue, IEqualityComparer<T>? equalityComparer) : IAssertion<T>

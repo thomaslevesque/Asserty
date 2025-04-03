@@ -1,16 +1,10 @@
-﻿using Asserty.Internal;
+﻿namespace Asserty.Internal;
 
-namespace Asserty;
-
-public static class AssertionExtensions
+internal static class AssertionHelper
 {
-    public static IAssertionResult<T> Execute<T>(this IAssertion<T> assertion, IAssertionSubject<T> subject)
+    public static IAssertionResult<T> Verify<T>(IAssertion<T> assertion, IAssertionSubject<T> subject)
     {
-        if (subject is INegativeAssertionSubject<T>)
-            assertion = assertion.GetNegativeAssertion();
-
-        var result = assertion.IsVerified(subject.Value);
-        if (!result)
+        if (!assertion.IsVerified(subject.Value))
         {
             var message = CreateAssertionFailureMessage(assertion, subject);
             throw new AssertionException(message);
