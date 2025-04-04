@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Asserty;
+namespace Asserty.Internal;
 
 [EditorBrowsable(EditorBrowsableState.Never)]
 public interface IHideObjectMembers

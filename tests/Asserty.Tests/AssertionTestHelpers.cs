@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Asserty.Internal;
 
 namespace Asserty.Tests;
 

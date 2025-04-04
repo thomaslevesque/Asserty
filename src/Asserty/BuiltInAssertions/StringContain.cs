@@ -1,4 +1,5 @@
-﻿using static Asserty.ValueFormatter;
+﻿using Asserty.Assertions;
+using static Asserty.Assertions.AssertionValueFormatter;
 
 namespace Asserty;
 

@@ -1,4 +1,6 @@
-﻿namespace Asserty;
+﻿using Asserty.Internal;
+
+namespace Asserty.Assertions;
 
 public interface IAssertionBuilder<T> : IHideObjectMembers
 {

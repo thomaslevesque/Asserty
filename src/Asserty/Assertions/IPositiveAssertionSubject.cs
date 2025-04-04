@@ -1,4 +1,4 @@
-﻿namespace Asserty;
+﻿namespace Asserty.Assertions;
 
 public interface IPositiveAssertionSubject<out T> : IAssertionSubject<T>
 {

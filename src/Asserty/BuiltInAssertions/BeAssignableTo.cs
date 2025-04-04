@@ -1,4 +1,6 @@
-﻿namespace Asserty;
+﻿using Asserty.Assertions;
+
+namespace Asserty;
 
 public static partial class AssertionSubjectExtensions
 {
@@ -28,7 +30,7 @@ public static partial class AssertionSubjectExtensions
             {
                 var actualType = actualValue?.GetType();
                 if (actualType == typeof(TExpected))
-                    return $"it is actually of that type";
+                    return "it is actually of that type";
                 return $"it is actually of type `{actualType}`, which is assignable to `{typeof(TExpected)}`";
             }
         }

@@ -1,4 +1,5 @@
-﻿using Asserty.Internal;
+﻿using Asserty.Assertions;
+using Asserty.Internal;
 
 namespace Asserty;
 

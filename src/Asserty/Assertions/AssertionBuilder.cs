@@ -1,6 +1,6 @@
 ﻿using Asserty.Internal;
 
-namespace Asserty;
+namespace Asserty.Assertions;
 
 public static class AssertionBuilder
 {

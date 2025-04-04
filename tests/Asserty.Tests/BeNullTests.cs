@@ -38,5 +38,12 @@ public static class BeNullTests
             const string value = "hello";
             Expect(() => value.Should().Not.BeNull()).ToPass();
         }
+
+        [Fact]
+        public void Not_BeNull_Can_Be_Chained_With_Other_Assertion()
+        {
+            const string value = "hello";
+            Expect(() => value.Should().Not.BeNull().And.Contain("ell")).ToPass();
+        }
     }
 }

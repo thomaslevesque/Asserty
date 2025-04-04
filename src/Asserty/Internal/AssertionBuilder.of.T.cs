@@ -1,4 +1,6 @@
-﻿namespace Asserty.Internal;
+﻿using Asserty.Assertions;
+
+namespace Asserty.Internal;
 
 internal class AssertionBuilder<T> :
     IAssertionBuilder<T>,

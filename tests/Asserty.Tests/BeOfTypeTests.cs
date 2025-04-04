@@ -1,6 +1,6 @@
 ﻿namespace Asserty.Tests;
 
-public class BeOfTypeTests
+public static class BeOfTypeTests
 {
     public class WhenActualValueIsOfTheExpectedType
     {

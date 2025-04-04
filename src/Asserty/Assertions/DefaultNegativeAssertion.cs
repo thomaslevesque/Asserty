@@ -1,4 +1,4 @@
-﻿namespace Asserty;
+﻿namespace Asserty.Assertions;
 
 public class DefaultNegativeAssertion<T>(IAssertion<T> positiveAssertion) : IAssertion<T>
 {

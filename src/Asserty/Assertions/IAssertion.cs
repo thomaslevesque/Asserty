@@ -1,4 +1,4 @@
-﻿namespace Asserty;
+﻿namespace Asserty.Assertions;
 
 /// <summary>
 /// Represents an assertion.

@@ -1,8 +1,4 @@
 ﻿namespace Asserty;
 
-public class AssertionException : Exception
-{
-    public AssertionException(string message, Exception? innerException = null) : base(message, innerException)
-    {
-    }
-}
+public class AssertionException(string message, Exception? innerException = null)
+    : Exception(message, innerException);

@@ -1,4 +1,6 @@
-﻿namespace Asserty.Internal;
+﻿using Asserty.Assertions;
+
+namespace Asserty.Internal;
 
 internal class CastAssertionResult<TOriginal, TResult>(IAssertionSubject<TOriginal> originalSubject) : IAssertionResult<TResult>
 {

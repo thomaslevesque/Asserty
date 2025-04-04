@@ -1,4 +1,6 @@
-﻿namespace Asserty;
+﻿using Asserty.Assertions;
+
+namespace Asserty;
 
 public static partial class AssertionSubjectExtensions
 {

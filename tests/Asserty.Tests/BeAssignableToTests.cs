@@ -1,6 +1,6 @@
 ﻿namespace Asserty.Tests;
 
-public class BeAssignableToTests
+public static class BeAssignableToTests
 {
     public class WhenActualValueIsOfTheExpectedType
     {

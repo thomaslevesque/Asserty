@@ -1,4 +1,6 @@
-﻿namespace Asserty.Internal;
+﻿using Asserty.Assertions;
+
+namespace Asserty.Internal;
 
 internal class AssertionResult<T>(IAssertionSubject<T> subject) : IAssertionResult<T>
 {

@@ -1,4 +1,6 @@
-﻿namespace Asserty.Internal;
+﻿using Asserty.Assertions;
+
+namespace Asserty.Internal;
 
 internal static class AssertionHelper
 {
@@ -15,7 +17,7 @@ internal static class AssertionHelper
 
     private static string CreateAssertionFailureMessage<T>(IAssertion<T> assertion, IAssertionSubject<T> subject)
     {
-        string subjectExpression = GetSubjectExpression(subject);
+        var subjectExpression = GetSubjectExpression(subject);
         var expectationDescription = assertion.GetExpectationDescription();
         var actualDescription = assertion.GetActualDescription(subject.Value);
         return $"Expected {subjectExpression} {expectationDescription}, but {actualDescription}.";

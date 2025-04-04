@@ -1,4 +1,4 @@
-﻿namespace Asserty;
+﻿namespace Asserty.Assertions;
 
 public abstract class DefaultAssertion<T> : IAssertion<T>
 {
