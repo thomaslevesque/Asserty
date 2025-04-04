@@ -1,66 +1,60 @@
-﻿namespace Asserty.Tests;
+﻿using static Asserty.Tests.AssertionTestHelpers;
+
+namespace Asserty.Tests;
 
 public static class BeOfTypeTests
 {
     public class WhenActualValueIsOfTheExpectedType
     {
         [Fact]
-        public void BeOfType_ShouldSucceedAndReturnSubjectOfTheExpectedType()
+        public void BeOfType_Should_Pass_And_ReturnSubjectOfTheExpectedType()
         {
             object value = "hello";
-            value.Should().BeOfType<string>().And.Contain("ell");
+            Expect(() => value.Should().BeOfType<string>().And.Contain("ell")).ToPass();
         }
 
         [Fact]
-        public void Not_BeOfType_ShouldThrow()
+        public void Not_BeOfType_Should_Fail()
         {
             object value = "hello";
-            var exception = Record.Exception(() => value.Should().Not.BeOfType<string>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal(
-                "Expected `value` not to be of type `System.String`, but it is actually of that type.",
-                exception.Message);
+            Expect(() => value.Should().Not.BeOfType<string>())
+                .ToFail("Expected `value` not to be of type `System.String`, but it is actually of that type.");
         }
     }
 
     public class WhenActualValueIsNotOfTheExpectedType
     {
         [Fact]
-        public void BeOfType_ShouldThrow()
+        public void BeOfType_Should_Fail()
         {
             object value = 42;
-            var exception = Record.Exception(() => value.Should().BeOfType<string>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal("Expected `value` to be of type `System.String`, but it is actually of type `System.Int32`.",
-                exception.Message);
+            Expect(() => value.Should().BeOfType<string>())
+                .ToFail("Expected `value` to be of type `System.String`, but it is actually of type `System.Int32`.");
         }
 
         [Fact]
-        public void Not_BeOfType_Should_Succeed()
+        public void Not_BeOfType_Should_Pass()
         {
             object value = "hello";
-            value.Should().Not.BeOfType<int>();
+            Expect(() => value.Should().Not.BeOfType<int>()).ToPass();
         }
     }
 
     public class WhenActualValueIsOfATypeDerivedFromTheExpectedType
     {
         [Fact]
-        public void BeOfType_ShouldThrow()
+        public void BeOfType_Should_Fail()
         {
             object value = "hello";
-            var exception = Record.Exception(() => value.Should().BeOfType<object>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal(
-                "Expected `value` to be of type `System.Object`, but it is actually of type `System.String`.",
-                exception.Message);
+            Expect(() => value.Should().BeOfType<object>())
+                .ToFail("Expected `value` to be of type `System.Object`, but it is actually of type `System.String`.");
         }
 
         [Fact]
-        public void Not_BeOfType_ShouldSucceed()
+        public void Not_BeOfType_Should_Pass()
         {
             object value = "hello";
-            value.Should().Not.BeOfType<object>();
+            Expect(() => value.Should().Not.BeOfType<object>()).ToPass();
         }
     }
 }

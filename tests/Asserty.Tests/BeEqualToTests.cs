@@ -1,50 +1,60 @@
+using static Asserty.Tests.AssertionTestHelpers;
+
 namespace Asserty.Tests;
 
-public class BeEqualToTests
+public abstract class BeEqualToTests
 {
-    [Fact]
-    public void When_Actual_Value_Is_Equal_To_Expected_Value_Then_BeEqualTo_Should_Succeed()
+    public class WhenValueIsEqualToExpectedValue
     {
-        const string actual = "hello";
-        actual.Should().BeEqualTo("hello");
+        [Fact]
+        public void BeEqualTo_Should_Pass()
+        {
+            const string actual = "hello";
+            Expect(() => actual.Should().BeEqualTo("hello")).ToPass();
+        }
+
+        [Fact]
+        public void Not_BeEqualTo_Should_Fail()
+        {
+            const string actual = "hello";
+            Expect(() => actual.Should().Not.BeEqualTo("hello"))
+                .ToFail("Expected `actual` not to be equal to \"hello\", but it is actually equal.");
+        }
     }
 
-    [Fact]
-    public void When_Actual_Value_Is_Equal_To_Expected_Value_Then_BeEqualTo_With_Specific_Comparer_Should_Succeed()
+    public class WhenValueIsEqualToExpectedValueWithSpecifiedComparer
     {
-        const string actual = "HeLlO";
-        actual.Should().BeEqualTo("hello", StringComparer.OrdinalIgnoreCase);
+        [Fact]
+        public void BeEqualTo_Should_Pass()
+        {
+            const string actual = "HeLlO";
+            Expect(() => actual.Should().BeEqualTo("hello", StringComparer.OrdinalIgnoreCase)).ToPass();
+        }
+
+        [Fact]
+        public void Not_BeEqualTo_Should_Fail()
+        {
+            const string actual = "HeLlO";
+            Expect(() => actual.Should().Not.BeEqualTo("hello", StringComparer.OrdinalIgnoreCase))
+                .ToFail("Expected `actual` not to be equal to \"hello\", but it is actually equal.");
+        }
     }
 
-    [Fact]
-    public void When_Actual_Value_Is_Not_Equal_To_Expected_Value_Then_BeEqualTo_Should_Fail()
+    public class WhenValueIsNotEqualToExpectedValue
     {
-        const string actual = "hi";
-        var exception = Record.Exception(() => actual.Should().BeEqualTo("hello"));
-        Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `actual` to be equal to \"hello\", but it is actually \"hi\".", exception.Message);
-    }
+        [Fact]
+        public void BeEqualTo_Should_Fail()
+        {
+            const string actual = "hi";
+            Expect(() => actual.Should().BeEqualTo("hello"))
+                .ToFail("Expected `actual` to be equal to \"hello\", but it is actually \"hi\".");
+        }
 
-    [Fact]
-    public void When_Actual_Value_Is_Not_Equal_To_Expected_Value_Then_NotBeEqualTo_Should_Succeed()
-    {
-        const string actual = "hi";
-        actual.Should().Not.BeEqualTo("hello");
-    }
-
-    [Fact]
-    public void When_Actual_Value_Is_Not_Equal_To_Expected_Value_Then_NotBeEqualTo_With_Specific_Comparer_Should_Succeed()
-    {
-        const string actual = "hi";
-        actual.Should().Not.BeEqualTo("hello", StringComparer.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void When_Actual_Value_Is_Equal_To_Expected_Value_Then_NotBeEqualTo_Should_Fail()
-    {
-        const string actual = "hello";
-        var exception = Record.Exception(() => actual.Should().Not.BeEqualTo("hello"));
-        Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `actual` not to be equal to \"hello\", but it is actually equal.", exception.Message);
+        [Fact]
+        public void Not_BeEqualTo_Should_Pass()
+        {
+            const string actual = "hi";
+            Expect(() => actual.Should().Not.BeEqualTo("hello")).ToPass();
+        }
     }
 }

@@ -1,51 +1,49 @@
-﻿namespace Asserty.Tests;
+﻿using static Asserty.Tests.AssertionTestHelpers;
+
+namespace Asserty.Tests;
 
 public static class BeAssignableToTests
 {
     public class WhenActualValueIsOfTheExpectedType
     {
         [Fact]
-        public void BeAssignableTo_ShouldSucceedAndReturnSubjectOfTheExpectedType()
+        public void BeAssignableTo_Should_Pass_And_ReturnSubjectOfTheExpectedType()
         {
             object value = "hello";
-            value.Should().BeAssignableTo<string>().And.Contain("ell");
+            Expect(() => value.Should().BeAssignableTo<string>().And.Contain("ell")).ToPass();
         }
 
         [Fact]
-        public void Not_BeAssignableTo_ShouldThrow()
+        public void Not_BeAssignableTo_Should_Fail()
         {
             object value = "hello";
-            var exception = Record.Exception(() => value.Should().Not.BeAssignableTo<string>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal(
-                "Expected `value` not to be assignable to `System.String`, but it is actually of that type.",
-                exception.Message);
+            Expect(() => value.Should().Not.BeAssignableTo<string>())
+                .ToFail("Expected `value` not to be assignable to `System.String`, but it is actually of that type.");
         }
     }
 
     public class WhenActualValueIsNotOfTheExpectedType
     {
         [Fact]
-        public void BeAssignableTo_Should_Throw()
+        public void BeAssignableTo_Should_Fail()
         {
             object value = 42;
-            var exception = Record.Exception(() => value.Should().BeAssignableTo<string>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal("Expected `value` to be assignable to `System.String`, but it is actually of type `System.Int32`, which is not assignable to `System.String`.", exception.Message);
+            Expect(() => value.Should().BeAssignableTo<string>())
+                .ToFail("Expected `value` to be assignable to `System.String`, but it is actually of type `System.Int32`, which is not assignable to `System.String`.");
         }
 
         [Fact]
-        public void NotBeAssignableTo_Should_Succeed()
+        public void Not_BeAssignableTo_Should_Pass()
         {
             object value = "hello";
-            value.Should().Not.BeAssignableTo<int>();
+            Expect(() => value.Should().Not.BeAssignableTo<int>()).ToPass();
         }
     }
 
     public class WhenActualValueIsOfATypeDerivedFromTheExpectedType
     {
         [Fact]
-        public void BeAssignableTo_Should_Succeed()
+        public void BeAssignableTo_Should_Pass()
         {
             object value = "hello";
             value.Should().BeAssignableTo<object>();
