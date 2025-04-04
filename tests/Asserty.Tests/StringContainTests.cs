@@ -22,7 +22,7 @@ public class StringContainTests
         const string actual = "Hello World!";
         var exception = Record.Exception(() => actual.Should().Contain("world"));
         Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `actual` to contain \"world\", but \"Hello World!\" didn't.", exception.Message);
+        Assert.Equal("Expected `actual` to contain \"world\", but \"Hello World!\" doesn't.", exception.Message);
     }
 
     [Fact]
@@ -45,6 +45,6 @@ public class StringContainTests
         const string actual = "Hello World!";
         var exception = Record.Exception(() => actual.Should().Not.Contain("World"));
         Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `actual` not to contain \"World\", but \"Hello World!\" did.", exception.Message);
+        Assert.Equal("Expected `actual` not to contain \"World\", but \"Hello World!\" does.", exception.Message);
     }
 }

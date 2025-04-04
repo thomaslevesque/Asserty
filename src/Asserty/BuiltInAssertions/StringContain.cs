@@ -10,25 +10,13 @@ public static partial class AssertionSubjectExtensions
         string substring,
         StringComparison comparisonType = StringComparison.Ordinal)
     {
-        return subject.Verify(new StringContainAssertion(substring, comparisonType));
-    }
-
-    private class StringContainAssertion(string substring, StringComparison comparisonType) : IAssertion<string?>
-    {
-        public bool IsVerified(string? actualValue) =>
-            actualValue?.Contains(substring, comparisonType) ?? false;
-
-        public string GetExpectationDescription() => $"to contain {Format(substring)}";
-
-        public string GetActualDescription(string? actualValue) => actualValue is null
-            ? "it was null"
-            : $"{Format(actualValue)} didn't";
-
-        public IAssertion<string?> GetNegativeAssertion() => new Negative(this);
-
-        private class Negative(StringContainAssertion positiveAssertion) : DefaultNegativeAssertion<string?>(positiveAssertion)
-        {
-            public override string GetActualDescription(string? actualValue) => $"{Format(actualValue)} did";
-        }
+        var assertion = AssertionBuilder.For<string?>()
+            .Verify(actualValue => actualValue?.Contains(substring, comparisonType) ?? false)
+            .ExpectValue($"to contain {Format(substring)}")
+            .DescribeActual(actualValue => actualValue is null
+                ? "it is null"
+                : $"{Format(actualValue)} doesn't")
+            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+        return subject.Verify(assertion);
     }
 }

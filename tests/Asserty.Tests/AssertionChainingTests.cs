@@ -36,7 +36,7 @@ public class AssertionChainingTests
         const string value = "hello";
         var exception = Record.Exception(() => value.Should().Contain("blah").And.BeEqualTo("hello"));
         Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `value` to contain \"blah\", but \"hello\" didn't.", exception.Message);
+        Assert.Equal("Expected `value` to contain \"blah\", but \"hello\" doesn't.", exception.Message);
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class AssertionChainingTests
         const string value = "hello";
         var exception = Record.Exception(() => value.Should().Not.Contain("ell").And.BeEqualTo("hello"));
         Assert.IsType<AssertionException>(exception);
-        Assert.Equal("Expected `value` not to contain \"ell\", but \"hello\" did.", exception.Message);
+        Assert.Equal("Expected `value` not to contain \"ell\", but \"hello\" does.", exception.Message);
     }
 
     [Fact]
