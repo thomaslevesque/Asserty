@@ -2,6 +2,9 @@
 
 namespace Asserty.Internal;
 
+/// <summary>
+/// Hides members inherited from <see cref="Object"/> to avoid polluting the autocompletion list in fluent APIs.
+/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public interface IHideObjectMembers
 {

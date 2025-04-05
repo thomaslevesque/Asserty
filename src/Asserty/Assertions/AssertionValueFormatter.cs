@@ -3,8 +3,16 @@ using System.Text;
 
 namespace Asserty.Assertions;
 
+/// <summary>
+/// Exposes a method to format values in assertion failure messages.
+/// </summary>
 public static class AssertionValueFormatter
 {
+    /// <summary>
+    /// Format values to be included in assertion failure messages.
+    /// </summary>
+    /// <param name="value">The value to format.</param>
+    /// <returns>A string representation of the value, suitable for including it in an assertion failure message.</returns>
     public static string Format(object? value) => value switch
     {
         null => "(null)",

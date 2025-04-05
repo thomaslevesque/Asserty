@@ -5,6 +5,14 @@ namespace Asserty;
 
 public static partial class AssertionSubjectExtensions
 {
+    /// <summary>
+    /// Asserts that the subject's value contains the specified substring.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion.</param>
+    /// <param name="substring">The substring that the subject's value must contain.</param>
+    /// <param name="comparisonType">The type of string comparison to use.</param>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
     public static IAssertionResult<string?> Contain(
         this IAssertionSubject<string?> subject,
         string substring,

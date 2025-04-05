@@ -14,7 +14,7 @@ public interface IAssertion<in T>
     bool IsVerified(T actualValue);
 
     /// <summary>
-    /// Returns the part of the assertion failure message describing what is expected, following "Expected {value}…",
+    /// Returns the part of the assertion failure message describing what is expected, following "Expected {expression}…",
     /// starting with "to" or "not to" (e.g. "to be equal to 42" or "to contain 3 elements").
     /// </summary>
     /// <returns>The part of the assertion failure message describing what is expected.</returns>
