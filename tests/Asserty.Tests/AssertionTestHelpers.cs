@@ -40,21 +40,23 @@ public static class AssertionTestHelpers
             try
             {
                 action();
-                throw new AssertionException($"Expected assertion `{expression}` to fail, but it passed.");
             }
             catch (AssertionException ex)
             {
-                if (ex.Message != expectedMessage)
-                {
-                    throw new AssertionException(
-                        $"""
-                         Assertion `{expression}` failed as expected, but the failure message is wrong.
-                         Expected: "{expectedMessage}"
-                         Actual: "{ex.Message}"
-                         """,
-                        ex);
-                }
+                if (ex.Message == expectedMessage)
+                    return;
+
+                throw new AssertionException(
+                    $"""
+                     Assertion `{expression}` failed as expected, but the failure message is wrong.
+                     Expected: "{expectedMessage}"
+                     Actual: "{ex.Message}"
+                     """,
+                    ex);
+
             }
+
+            throw new AssertionException($"Expected assertion `{expression}` to fail, but it passed.");
         }
     }
 }
