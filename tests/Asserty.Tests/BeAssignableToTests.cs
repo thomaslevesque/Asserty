@@ -46,18 +46,15 @@ public static class BeAssignableToTests
         public void BeAssignableTo_Should_Pass()
         {
             object value = "hello";
-            value.Should().BeAssignableTo<object>();
+            Expect(() => value.Should().BeAssignableTo<object>()).ToPass();
         }
 
         [Fact]
         public void Not_BeAssignableTo_Should_Fail()
         {
             object value = "hello";
-            var exception = Record.Exception(() => value.Should().Not.BeAssignableTo<object>());
-            Assert.IsType<AssertionException>(exception);
-            Assert.Equal(
-                "Expected `value` not to be assignable to `System.Object`, but it is actually of type `System.String`, which is assignable to `System.Object`.",
-                exception.Message);
+            Expect(() => value.Should().Not.BeAssignableTo<object>())
+                .ToFail("Expected `value` not to be assignable to `System.Object`, but it is actually of type `System.String`, which is assignable to `System.Object`.");
         }
     }
 }
