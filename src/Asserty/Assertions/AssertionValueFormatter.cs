@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Collections;
 using System.Text;
 
 namespace Asserty.Assertions;
@@ -17,6 +18,7 @@ public static class AssertionValueFormatter
     {
         null => "(null)",
         string s => FormatStringValue(s),
+        IEnumerable collection => FormatCollection(collection),
         _ => value.ToString() ?? ""
     };
 
@@ -55,6 +57,28 @@ public static class AssertionValueFormatter
                 builder.Append(substitution);
             }
         }
+        return builder.ToString();
+    }
+
+    private static string FormatCollection(IEnumerable collection)
+    {
+        var builder = new StringBuilder(32);
+        builder.Append('[');
+        var enumerator = collection.GetEnumerator();
+        using var disposableEnumerator = enumerator as IDisposable;
+        int count = 0;
+        while (enumerator.MoveNext() && count <= 3)
+        {
+            if (count > 0)
+                builder.Append(", ");
+            count++;
+            if (count <= 3)
+                builder.Append(Format(enumerator.Current));
+            else
+                builder.Append('…');
+        }
+
+        builder.Append(']');
         return builder.ToString();
     }
 }
