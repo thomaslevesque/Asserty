@@ -37,4 +37,23 @@ public static class BeEmptyTests
             Expect(() => Collection.Should().Not.BeEmpty()).ToPass();
         }
     }
+
+    public class WhenCollectionIsNull
+    {
+        private static readonly int[]? Collection = null;
+
+        [Fact]
+        public void BeEmpty_Should_Fail()
+        {
+            Expect(() => Collection.Should().BeEmpty())
+                .ToFail("Expected `Collection` to be empty, but it is actually null.");
+        }
+
+        [Fact]
+        public void Not_BeEmpty_Should_Fail()
+        {
+            Expect(() => Collection.Should().Not.BeEmpty())
+                .ToFail("Expected `Collection` not to be empty, but it is actually null.");
+        }
+    }
 }
