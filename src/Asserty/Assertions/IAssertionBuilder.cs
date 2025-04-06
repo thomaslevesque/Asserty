@@ -13,7 +13,7 @@ public interface IAssertionBuilder<TSubject> : IHideObjectMembers
     /// </summary>
     /// <param name="predicate">The predicate that verifies if the value verifies the assertion.</param>
     /// <returns>The next step of the assertion definition.</returns>
-    IExpectValueStep Verify(Func<TSubject, bool> predicate);
+    IWithPreconditionStep Verify(Func<TSubject, bool> predicate);
 
     #region Fluent API interfaces
 
@@ -27,6 +27,24 @@ public interface IAssertionBuilder<TSubject> : IHideObjectMembers
         /// </summary>
         /// <returns>An assertion.</returns>
         IAssertion<TSubject> Build();
+    }
+
+    /// <summary>
+    /// Represents the step of the assertion definition where the precondition is specified.
+    /// </summary>
+    public interface IWithPreconditionStep : IExpectValueStep
+    {
+        /// <summary>
+        /// Specifies a precondition for the assertion.
+        /// </summary>
+        /// <param name="precondition">The predicate that verifies if the value verifies the precondition.</param>
+        /// <param name="failureDescriptionFactory">A description for the precondition failure (optional).</param>
+        /// <returns>The next step of the assertion definition.</returns>
+        /// <remarks>The precondition is checked before the actual assertion predicate. If it's not verified, the assertion
+        /// always fails, whether it's negated or not. This step is optional.</remarks>
+        IExpectValueStep WithPrecondition(
+            Func<TSubject, bool> precondition,
+            Func<TSubject, string?>? failureDescriptionFactory = null);
     }
 
     /// <summary>
