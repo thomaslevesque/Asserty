@@ -2,9 +2,9 @@
 
 namespace Asserty.Internal;
 
-internal class AssertionResult<T>(IAssertionSubject<T> subject) : IAssertionResult<T>
+internal class AssertionResult<TSubject>(IAssertionSubject<TSubject> subject) : IAssertionResult<TSubject>
 {
-    public IPositiveAssertionSubject<T> And => subject.EnsurePositive();
+    public IPositiveAssertionSubject<TSubject> And => subject.EnsurePositive();
 
-    public IAssertionResult<TResult> Cast<TResult>() => new CastAssertionResult<T, TResult>(subject);
+    public IAssertionResult<TResult> Cast<TResult>() => new CastAssertionResult<TSubject, TResult>(subject);
 }

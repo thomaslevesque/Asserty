@@ -3,15 +3,15 @@
 /// <summary>
 /// Represents an assertion.
 /// </summary>
-/// <typeparam name="T">The type of the asserted value.</typeparam>
-public interface IAssertion<in T>
+/// <typeparam name="TSubject">The type of the asserted value.</typeparam>
+public interface IAssertion<in TSubject>
 {
     /// <summary>
     /// Evaluates whether the assertion is verified.
     /// </summary>
     /// <param name="actualValue">The actual value on which to evaluate the assertion.</param>
     /// <returns><c>true</c> if the assertion is verified, otherwise <c>false</c>.</returns>
-    bool IsVerified(T actualValue);
+    bool IsVerified(TSubject actualValue);
 
     /// <summary>
     /// Returns the part of the assertion failure message describing what is expected, following "Expected {expression}…",
@@ -26,11 +26,11 @@ public interface IAssertion<in T>
     /// </summary>
     /// <param name="actualValue">The actual value of the subject</param>
     /// <returns>The part of the assertion failure message describing what was actually observed.</returns>
-    string GetActualDescription(T actualValue);
+    string GetActualDescription(TSubject actualValue);
 
     /// <summary>
     /// Returns the negation of this assertion (e.g. not equal instead of equal)
     /// </summary>
     /// <returns>An assertion that is the negation of this assertion.</returns>
-    IAssertion<T> GetNegativeAssertion();
+    IAssertion<TSubject> GetNegativeAssertion();
 }

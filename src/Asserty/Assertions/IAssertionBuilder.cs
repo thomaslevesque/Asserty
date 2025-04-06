@@ -5,15 +5,15 @@ namespace Asserty.Assertions;
 /// <summary>
 /// Provides a way to fluently define a new type of assertion.
 /// </summary>
-/// <typeparam name="T">The type of the assertion subject's value.</typeparam>
-public interface IAssertionBuilder<T> : IHideObjectMembers
+/// <typeparam name="TSubject">The type of the assertion subject's value.</typeparam>
+public interface IAssertionBuilder<TSubject> : IHideObjectMembers
 {
     /// <summary>
     /// Specifies the predicate for the assertion.
     /// </summary>
     /// <param name="predicate">The predicate that verifies if the value verifies the assertion.</param>
     /// <returns>The next step of the assertion definition.</returns>
-    IExpectValueStep Verify(Func<T, bool> predicate);
+    IExpectValueStep Verify(Func<TSubject, bool> predicate);
 
     #region Fluent API interfaces
 
@@ -26,7 +26,7 @@ public interface IAssertionBuilder<T> : IHideObjectMembers
         /// Builds the assertion being defined.
         /// </summary>
         /// <returns>An assertion.</returns>
-        IAssertion<T> Build();
+        IAssertion<TSubject> Build();
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public interface IAssertionBuilder<T> : IHideObjectMembers
         /// <param name="actualDescriptionFactory">The part of the assertion failure message describing what was
         /// actually observed.</param>
         /// <returns>The next step of the assertion definition.</returns>
-        IIDescribeActualWhenNegatedStep DescribeActual(Func<T, string> actualDescriptionFactory);
+        IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, string> actualDescriptionFactory);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public interface IAssertionBuilder<T> : IHideObjectMembers
         /// <returns>The next step of the assertion definition.</returns>
         /// <remarks>This step is optional but recommended. By default, the positive description will be used, which
         /// might work in some cases, but probably not most.</remarks>
-        IFinalStep DescribeActualWhenNegated(Func<T, string> negativeActualDescriptionFactory);
+        IFinalStep DescribeActualWhenNegated(Func<TSubject, string> negativeActualDescriptionFactory);
     }
 
     #endregion

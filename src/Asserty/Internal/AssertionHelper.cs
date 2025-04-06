@@ -4,7 +4,7 @@ namespace Asserty.Internal;
 
 internal static class AssertionHelper
 {
-    public static IAssertionResult<T> Verify<T>(IAssertion<T> assertion, IAssertionSubject<T> subject)
+    public static IAssertionResult<TSubject> Verify<TSubject>(IAssertion<TSubject> assertion, IAssertionSubject<TSubject> subject)
     {
         if (!assertion.IsVerified(subject.Value))
         {
@@ -12,10 +12,10 @@ internal static class AssertionHelper
             throw new AssertionException(message);
         }
 
-        return new AssertionResult<T>(subject);
+        return new AssertionResult<TSubject>(subject);
     }
 
-    private static string CreateAssertionFailureMessage<T>(IAssertion<T> assertion, IAssertionSubject<T> subject)
+    private static string CreateAssertionFailureMessage<TSubject>(IAssertion<TSubject> assertion, IAssertionSubject<TSubject> subject)
     {
         var subjectExpression = GetSubjectExpression(subject);
         var expectationDescription = assertion.GetExpectationDescription();
@@ -23,10 +23,10 @@ internal static class AssertionHelper
         return $"Expected {subjectExpression} {expectationDescription}, but {actualDescription}.";
     }
 
-    private static string GetSubjectExpression<T>(IAssertionSubject<T> subject)
+    private static string GetSubjectExpression<TSubject>(IAssertionSubject<TSubject> subject)
     {
         return !string.IsNullOrWhiteSpace(subject.Expression)
             ? $"`{subject.Expression}`"
-            : $"(expression of type `{typeof(T)}`)";
+            : $"(expression of type `{typeof(TSubject)}`)";
     }
 }

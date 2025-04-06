@@ -2,9 +2,9 @@
 
 namespace Asserty.Internal;
 
-internal record NegativeAssertionSubject<T>(T Value, string Expression) : INegativeAssertionSubject<T>
+internal record NegativeAssertionSubject<TSubject>(TSubject Value, string Expression) : INegativeAssertionSubject<TSubject>
 {
-    public IAssertionResult<T> Verify(IAssertion<T> assertion) =>
+    public IAssertionResult<TSubject> Verify(IAssertion<TSubject> assertion) =>
         AssertionHelper.Verify(assertion.GetNegativeAssertion(), this);
 
     public IAssertionSubject<TResult> Cast<TResult>() =>

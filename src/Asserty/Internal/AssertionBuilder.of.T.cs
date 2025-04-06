@@ -2,51 +2,51 @@
 
 namespace Asserty.Internal;
 
-internal class AssertionBuilder<T> :
-    IAssertionBuilder<T>,
-    IAssertionBuilder<T>.IExpectValueStep,
-    IAssertionBuilder<T>.IExpectValueWhenNegatedStep,
-    IAssertionBuilder<T>.IDescribeActualStep,
-    IAssertionBuilder<T>.IIDescribeActualWhenNegatedStep,
-    IAssertionBuilder<T>.IFinalStep
+internal class AssertionBuilder<TSubject> :
+    IAssertionBuilder<TSubject>,
+    IAssertionBuilder<TSubject>.IExpectValueStep,
+    IAssertionBuilder<TSubject>.IExpectValueWhenNegatedStep,
+    IAssertionBuilder<TSubject>.IDescribeActualStep,
+    IAssertionBuilder<TSubject>.IIDescribeActualWhenNegatedStep,
+    IAssertionBuilder<TSubject>.IFinalStep
 {
-    private Func<T, bool>? _predicate;
+    private Func<TSubject, bool>? _predicate;
     private string? _expectationDescription;
     private string? _negativeExpectationDescription;
-    private Func<T, string>? _actualDescriptionFactory;
-    private Func<T, string>? _negativeActualDescriptionFactory;
+    private Func<TSubject, string>? _actualDescriptionFactory;
+    private Func<TSubject, string>? _negativeActualDescriptionFactory;
 
-    public IAssertionBuilder<T>.IExpectValueStep Verify(Func<T, bool> predicate)
+    public IAssertionBuilder<TSubject>.IExpectValueStep Verify(Func<TSubject, bool> predicate)
     {
         _predicate = predicate;
         return this;
     }
 
-    public IAssertionBuilder<T>.IExpectValueWhenNegatedStep ExpectValue(string expectationDescription)
+    public IAssertionBuilder<TSubject>.IExpectValueWhenNegatedStep ExpectValue(string expectationDescription)
     {
         _expectationDescription = expectationDescription;
         return this;
     }
 
-    public IAssertionBuilder<T>.IDescribeActualStep ExpectValueWhenNegated(string negativeExpectationDescription)
+    public IAssertionBuilder<TSubject>.IDescribeActualStep ExpectValueWhenNegated(string negativeExpectationDescription)
     {
         _negativeExpectationDescription = negativeExpectationDescription;
         return this;
     }
 
-    public IAssertionBuilder<T>.IIDescribeActualWhenNegatedStep DescribeActual(Func<T, string> actualDescriptionFactory)
+    public IAssertionBuilder<TSubject>.IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, string> actualDescriptionFactory)
     {
         _actualDescriptionFactory = actualDescriptionFactory;
         return this;
     }
 
-    public IAssertionBuilder<T>.IFinalStep DescribeActualWhenNegated(Func<T, string> negativeActualDescriptionFactory)
+    public IAssertionBuilder<TSubject>.IFinalStep DescribeActualWhenNegated(Func<TSubject, string> negativeActualDescriptionFactory)
     {
         _negativeActualDescriptionFactory = negativeActualDescriptionFactory;
         return this;
     }
 
-    public IAssertion<T> Build()
+    public IAssertion<TSubject> Build()
     {
         if (_predicate is null)
             throw new InvalidOperationException("Predicate is not set");
@@ -64,32 +64,32 @@ internal class AssertionBuilder<T> :
     }
 
     private class BuiltAssertion(
-        Func<T, bool> predicate,
+        Func<TSubject, bool> predicate,
         string expectationDescription,
-        Func<T, string> actualDescriptionFactory,
+        Func<TSubject, string> actualDescriptionFactory,
         string? negativeExpectationDescription,
-        Func<T, string>? negativeActualDescriptionFactory
-    ) : IAssertion<T>
+        Func<TSubject, string>? negativeActualDescriptionFactory
+    ) : IAssertion<TSubject>
     {
-        public bool IsVerified(T actualValue) => predicate(actualValue);
+        public bool IsVerified(TSubject actualValue) => predicate(actualValue);
 
         public string GetExpectationDescription() => expectationDescription;
 
-        public string GetActualDescription(T actualValue) => actualDescriptionFactory(actualValue);
+        public string GetActualDescription(TSubject actualValue) => actualDescriptionFactory(actualValue);
 
-        public IAssertion<T> GetNegativeAssertion() =>
+        public IAssertion<TSubject> GetNegativeAssertion() =>
             new Negative(this, negativeExpectationDescription, negativeActualDescriptionFactory);
 
         private class Negative(
-            IAssertion<T> positiveAssertion,
+            IAssertion<TSubject> positiveAssertion,
             string? negativeExpectationDescription,
-            Func<T, string>? negativeActualDescriptionFactory
-        ) : DefaultNegativeAssertion<T>(positiveAssertion)
+            Func<TSubject, string>? negativeActualDescriptionFactory
+        ) : DefaultNegativeAssertion<TSubject>(positiveAssertion)
         {
             public override string GetExpectationDescription() =>
                 negativeExpectationDescription ?? base.GetExpectationDescription();
 
-            public override string GetActualDescription(T actualValue) =>
+            public override string GetActualDescription(TSubject actualValue) =>
                 negativeActualDescriptionFactory?.Invoke(actualValue) ?? base.GetActualDescription(actualValue);
         }
     }
