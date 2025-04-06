@@ -17,16 +17,8 @@ internal static class AssertionHelper
 
     private static string CreateAssertionFailureMessage<TSubject>(IAssertion<TSubject> assertion, IAssertionSubject<TSubject> subject)
     {
-        var subjectExpression = GetSubjectExpression(subject);
         var expectationDescription = assertion.GetExpectationDescription();
         var actualDescription = assertion.GetActualDescription(subject.Value);
-        return $"Expected {subjectExpression} {expectationDescription}, but {actualDescription}.";
-    }
-
-    private static string GetSubjectExpression<TSubject>(IAssertionSubject<TSubject> subject)
-    {
-        return !string.IsNullOrWhiteSpace(subject.Expression)
-            ? $"`{subject.Expression}`"
-            : $"(expression of type `{typeof(TSubject)}`)";
+        return $"Expected `{subject.Expression}` {expectationDescription}, but {actualDescription}.";
     }
 }
