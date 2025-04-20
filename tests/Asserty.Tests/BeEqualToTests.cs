@@ -1,5 +1,3 @@
-using static Asserty.Tests.AssertionTestHelpers;
-
 namespace Asserty.Tests;
 
 public abstract class BeEqualToTests

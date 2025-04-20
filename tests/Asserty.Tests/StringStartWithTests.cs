@@ -1,6 +1,4 @@
-﻿using static Asserty.Tests.AssertionTestHelpers;
-
-namespace Asserty.Tests;
+﻿namespace Asserty.Tests;
 
 public static class StringStartWithTests
 {
