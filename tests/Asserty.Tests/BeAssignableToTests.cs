@@ -33,8 +33,8 @@ public static class BeAssignableToTests
         [Fact]
         public void Not_BeAssignableTo_Should_Pass()
         {
-            object value = "hello";
-            Expect(() => value.Should().Not.BeAssignableTo<int>()).ToPass();
+            object value = 42;
+            Expect(() => value.Should().Not.BeAssignableTo<string>()).ToPass();
         }
     }
 
