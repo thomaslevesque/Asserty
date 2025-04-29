@@ -48,10 +48,9 @@ public static class BeEmptyTests
         }
 
         [Fact]
-        public void Not_BeEmpty_Should_Fail()
+        public void Not_BeEmpty_Should_Pass()
         {
-            Expect(() => Collection.Should().Not.BeEmpty())
-                .ToFail("Expected `Collection` not to be empty, but it is actually null.");
+            Expect(() => Collection.Should().Not.BeEmpty()).ToPass();
         }
     }
 }

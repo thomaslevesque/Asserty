@@ -14,12 +14,13 @@ public static partial class AssertionSubjectExtensions
     public static IAssertionResult<IEnumerable<T>?> BeEmpty<T>(this IAssertionSubject<IEnumerable<T>?> subject)
     {
         var assertion = AssertionBuilder.For<IEnumerable<T>?>()
-            .Verify(actualValue => !actualValue!.Any())
-            .WithPrecondition(actualValue => actualValue is not null, _ => "it is actually null")
+            .Verify(actualValue => actualValue is not null && !actualValue.Any())
             .ExpectValue("to be empty")
             .DescribeActual(actualValue =>
             {
-                int count = actualValue!.Count();
+                if (actualValue is null)
+                    return "it is actually null";
+                int count = actualValue.Count();
                 var elements = count > 1 ? "elements" : "element";
                 return $"{Format(actualValue)} contains {count} {elements}";
             })
