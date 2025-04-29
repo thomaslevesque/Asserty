@@ -8,14 +8,14 @@ public static class StringEndWithTests
         public void EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().EndWith("World!"));
+            Expect(() => actual.Should().EndWith("World!"));
         }
 
         [Fact]
         public void Not_EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().Not.EndWith("World!"))
+            Expect(() => actual.Should().Not.EndWith("World!"))
                 .ToFail("Expected `actual` not to end with \"World!\", but \"Hello World!\" does.");
         }
     }
@@ -26,14 +26,14 @@ public static class StringEndWithTests
         public void EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().EndWith("world!", StringComparison.OrdinalIgnoreCase)).ToPass();
+            Expect(() => actual.Should().EndWith("world!", StringComparison.OrdinalIgnoreCase)).ToPass();
         }
 
         [Fact]
         public void Not_EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().Not.EndWith("world!", StringComparison.OrdinalIgnoreCase))
+            Expect(() => actual.Should().Not.EndWith("world!", StringComparison.OrdinalIgnoreCase))
                 .ToFail("Expected `actual` not to end with \"world!\", but \"Hello World!\" does.");
         }
     }
@@ -44,7 +44,7 @@ public static class StringEndWithTests
         public void EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().EndWith("world!"))
+            Expect(() => actual.Should().EndWith("world!"))
                 .ToFail("Expected `actual` to end with \"world!\", but \"Hello World!\" doesn't.");
         }
 
@@ -52,7 +52,7 @@ public static class StringEndWithTests
         public void Not_EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            AssertionTestHelpers.Expect(() => actual.Should().Not.EndWith("world!")).ToPass();
+            Expect(() => actual.Should().Not.EndWith("world!")).ToPass();
         }
     }
 }
