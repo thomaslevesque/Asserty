@@ -72,4 +72,23 @@ public static partial class AssertionSubjectExtensions
             .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
         return subject.Verify(assertion);
     }
+
+    /// <summary>
+    /// Asserts that the subject's value has the specified length.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion.</param>
+    /// <param name="length">The length the subject's value must have.</param>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<string?> HaveLength(
+        this IAssertionSubject<string?> subject,
+        int length)
+    {
+        var assertion = AssertionBuilder.For<string?>()
+            .Verify(s => s is not null && s.Length == length)
+            .ExpectValue($"to have a length of {length} characters")
+            .DescribeActual(s => s is null ? "it is null" : $"its actual length is {s.Length}")
+            .DescribeActualWhenNegated(_ => "it does");
+        return subject.Verify(assertion);
+    }
 }
