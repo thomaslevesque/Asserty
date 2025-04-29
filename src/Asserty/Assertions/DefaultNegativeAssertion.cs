@@ -11,13 +11,6 @@
 public class DefaultNegativeAssertion<TSubject>(IAssertion<TSubject> positiveAssertion) : IAssertion<TSubject>
 {
     /// <inheritdoc />
-    public bool IsPreconditionVerified(TSubject actualValue) => positiveAssertion.IsPreconditionVerified(actualValue);
-
-    /// <inheritdoc />
-    public string? GetPreconditionFailureDescription(TSubject actualValue) =>
-        positiveAssertion.GetPreconditionFailureDescription(actualValue);
-
-    /// <inheritdoc />
     public virtual bool IsVerified(TSubject actualValue) => !positiveAssertion.IsVerified(actualValue);
 
     /// <inheritdoc />

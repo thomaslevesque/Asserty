@@ -7,23 +7,6 @@
 public interface IAssertion<in TSubject>
 {
     /// <summary>
-    /// Evaluates whether the assertion's precondition is verified.
-    /// </summary>
-    /// <param name="actualValue">The actual value on which to evaluate the precondition.</param>
-    /// <returns><c>true</c> if the precondition is verified, otherwise <c>false</c>.</returns>
-    /// <remarks>The precondition is checked before the actual assertion predicate. If it's not verified, the assertion
-    /// always fails, whether it's negated or not.</remarks>
-    bool IsPreconditionVerified(TSubject actualValue);
-
-    /// <summary>
-    /// Returns the part of the assertion failure message describing why the precondition failed.
-    /// </summary>
-    /// <param name="actualValue">The actual value of the subject</param>
-    /// <returns>The part of the assertion failure message describing why the precondition failed.</returns>
-    /// <remarks>If it returns null, <see cref="GetActualDescription"/> will be used instead.</remarks>
-    string? GetPreconditionFailureDescription(TSubject actualValue);
-
-    /// <summary>
     /// Evaluates whether the assertion is verified.
     /// </summary>
     /// <param name="actualValue">The actual value on which to evaluate the assertion.</param>
