@@ -38,13 +38,13 @@ public static partial class AssertionSubjectExtensions
     public static IAssertionResult<IEnumerable<T>?> HaveCount<T>(this IAssertionSubject<IEnumerable<T>?> subject, int count)
     {
         var assertion = AssertionBuilder.For<IEnumerable<T>?>()
-            .Verify(actualValue => actualValue is not null && actualValue.Count() == count)
+            .Verify((actualValue, context) => context.Set("count", actualValue?.Count()) == count)
             .ExpectValue($"to contain {count} {Elements(count)}")
-            .DescribeActual(actualValue =>
+            .DescribeActual((actualValue, context) =>
             {
                 if (actualValue is null)
                     return "it is actually null";
-                int actualCount = actualValue.Count();
+                var actualCount = context.Get<int>("count");
                 return $"{Format(actualValue)} contains {actualCount} {Elements(actualCount)}";
             })
             .DescribeActualWhenNegated(_ => "it does");

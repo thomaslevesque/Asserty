@@ -8,9 +8,10 @@ internal static class AssertionHelper
         IAssertion<TSubject> assertion,
         IAssertionSubject<TSubject> subject)
     {
-        if (!assertion.IsVerified(subject.Value))
+        var context = new AssertionEvaluationContext();
+        if (!assertion.IsVerified(subject.Value, context))
         {
-            var message = CreateAssertionFailureMessage(assertion, subject);
+            var message = CreateAssertionFailureMessage(assertion, subject, context);
             throw new AssertionException(message);
         }
 
@@ -19,9 +20,10 @@ internal static class AssertionHelper
 
     private static string CreateAssertionFailureMessage<TSubject>(
         IAssertion<TSubject> assertion,
-        IAssertionSubject<TSubject> subject)
+        IAssertionSubject<TSubject> subject,
+        AssertionEvaluationContext context)
     {
-        var actualDescription = assertion.GetActualDescription(subject.Value);
+        var actualDescription = assertion.GetActualDescription(subject.Value, context);
         return CreateAssertionFailureMessage(assertion, subject, actualDescription);
     }
 

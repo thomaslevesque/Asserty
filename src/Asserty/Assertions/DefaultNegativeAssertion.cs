@@ -11,13 +11,15 @@
 public class DefaultNegativeAssertion<TSubject>(IAssertion<TSubject> positiveAssertion) : IAssertion<TSubject>
 {
     /// <inheritdoc />
-    public virtual bool IsVerified(TSubject actualValue) => !positiveAssertion.IsVerified(actualValue);
+    public virtual bool IsVerified(TSubject actualValue, AssertionEvaluationContext context) =>
+        !positiveAssertion.IsVerified(actualValue, context);
 
     /// <inheritdoc />
     public virtual string GetExpectationDescription() => "not " + positiveAssertion.GetExpectationDescription();
 
     /// <inheritdoc />
-    public virtual string GetActualDescription(TSubject actualValue) => positiveAssertion.GetActualDescription(actualValue);
+    public virtual string GetActualDescription(TSubject actualValue, AssertionEvaluationContext context) =>
+        positiveAssertion.GetActualDescription(actualValue, context);
 
     /// <inheritdoc />
     public IAssertion<TSubject> GetNegativeAssertion() => positiveAssertion;

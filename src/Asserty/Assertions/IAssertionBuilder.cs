@@ -13,7 +13,14 @@ public interface IAssertionBuilder<TSubject> : IHideObjectMembers
     /// </summary>
     /// <param name="predicate">The predicate that verifies if the value verifies the assertion.</param>
     /// <returns>The next step of the assertion definition.</returns>
-    IExpectValueStep Verify(Func<TSubject, bool> predicate);
+    IExpectValueStep Verify(Func<TSubject, bool> predicate) => Verify((value, _) => predicate(value));
+
+    /// <summary>
+    /// Specifies the predicate for the assertion.
+    /// </summary>
+    /// <param name="predicate">The predicate that verifies if the value verifies the assertion.</param>
+    /// <returns>The next step of the assertion definition.</returns>
+    IExpectValueStep Verify(Func<TSubject, AssertionEvaluationContext, bool> predicate);
 
     #region Fluent API interfaces
 
@@ -74,7 +81,17 @@ public interface IAssertionBuilder<TSubject> : IHideObjectMembers
         /// <param name="actualDescriptionFactory">The part of the assertion failure message describing what was
         /// actually observed.</param>
         /// <returns>The next step of the assertion definition.</returns>
-        IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, string> actualDescriptionFactory);
+        IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, string> actualDescriptionFactory) =>
+            DescribeActual((actualValue, _) => actualDescriptionFactory(actualValue));
+
+        /// <summary>
+        /// Specifies the part of the assertion failure message describing what was actually observed, following "but…"
+        /// (e.g. "it is actually 0" or "it actually contains 1 element").
+        /// </summary>
+        /// <param name="actualDescriptionFactory">The part of the assertion failure message describing what was
+        /// actually observed.</param>
+        /// <returns>The next step of the assertion definition.</returns>
+        IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, AssertionEvaluationContext, string> actualDescriptionFactory);
     }
 
     /// <summary>
@@ -92,7 +109,19 @@ public interface IAssertionBuilder<TSubject> : IHideObjectMembers
         /// <returns>The next step of the assertion definition.</returns>
         /// <remarks>This step is optional but recommended. By default, the positive description will be used, which
         /// might work in some cases, but probably not most.</remarks>
-        IFinalStep DescribeActualWhenNegated(Func<TSubject, string> negativeActualDescriptionFactory);
+        IFinalStep DescribeActualWhenNegated(Func<TSubject, string> negativeActualDescriptionFactory) =>
+            DescribeActualWhenNegated((actualValue, _) => negativeActualDescriptionFactory(actualValue));
+
+        /// <summary>
+        /// Specifies the part of the assertion failure message describing what was actually observed for a negated
+        /// assertion, following "but…" (e.g. "it is actually 0" or "it actually contains 1 element").
+        /// </summary>
+        /// <param name="negativeActualDescriptionFactory">The part of the assertion failure message describing what was
+        /// actually observed.</param>
+        /// <returns>The next step of the assertion definition.</returns>
+        /// <remarks>This step is optional but recommended. By default, the positive description will be used, which
+        /// might work in some cases, but probably not most.</remarks>
+        IFinalStep DescribeActualWhenNegated(Func<TSubject, AssertionEvaluationContext, string> negativeActualDescriptionFactory);
     }
 
     #endregion

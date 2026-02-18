@@ -10,8 +10,9 @@ public interface IAssertion<in TSubject>
     /// Evaluates whether the assertion is verified.
     /// </summary>
     /// <param name="actualValue">The actual value on which to evaluate the assertion.</param>
+    /// <param name="context">The assertion evaluation context.</param>
     /// <returns><c>true</c> if the assertion is verified, otherwise <c>false</c>.</returns>
-    bool IsVerified(TSubject actualValue);
+    bool IsVerified(TSubject actualValue, AssertionEvaluationContext context);
 
     /// <summary>
     /// Returns the part of the assertion failure message describing what is expected, following "Expected {expression}…",
@@ -25,8 +26,9 @@ public interface IAssertion<in TSubject>
     /// (e.g. "it is actually 0" or "it actually contains 1 element").
     /// </summary>
     /// <param name="actualValue">The actual value of the subject</param>
+    /// <param name="context">The assertion evaluation context.</param>
     /// <returns>The part of the assertion failure message describing what was actually observed.</returns>
-    string GetActualDescription(TSubject actualValue);
+    string GetActualDescription(TSubject actualValue, AssertionEvaluationContext context);
 
     /// <summary>
     /// Returns the negation of this assertion (e.g. not equal instead of equal)

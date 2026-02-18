@@ -10,13 +10,13 @@ internal class AssertionBuilder<TSubject> :
     IAssertionBuilder<TSubject>.IIDescribeActualWhenNegatedStep,
     IAssertionBuilder<TSubject>.IFinalStep
 {
-    private Func<TSubject, bool>? _predicate;
+    private Func<TSubject, AssertionEvaluationContext, bool>? _predicate;
     private string? _expectationDescription;
     private string? _negativeExpectationDescription;
-    private Func<TSubject, string>? _actualDescriptionFactory;
-    private Func<TSubject, string>? _negativeActualDescriptionFactory;
+    private Func<TSubject, AssertionEvaluationContext, string>? _actualDescriptionFactory;
+    private Func<TSubject, AssertionEvaluationContext, string>? _negativeActualDescriptionFactory;
 
-    public IAssertionBuilder<TSubject>.IExpectValueStep Verify(Func<TSubject, bool> predicate)
+    public IAssertionBuilder<TSubject>.IExpectValueStep Verify(Func<TSubject, AssertionEvaluationContext, bool> predicate)
     {
         _predicate = predicate;
         return this;
@@ -34,13 +34,13 @@ internal class AssertionBuilder<TSubject> :
         return this;
     }
 
-    public IAssertionBuilder<TSubject>.IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, string> actualDescriptionFactory)
+    public IAssertionBuilder<TSubject>.IIDescribeActualWhenNegatedStep DescribeActual(Func<TSubject, AssertionEvaluationContext, string> actualDescriptionFactory)
     {
         _actualDescriptionFactory = actualDescriptionFactory;
         return this;
     }
 
-    public IAssertionBuilder<TSubject>.IFinalStep DescribeActualWhenNegated(Func<TSubject, string> negativeActualDescriptionFactory)
+    public IAssertionBuilder<TSubject>.IFinalStep DescribeActualWhenNegated(Func<TSubject, AssertionEvaluationContext, string> negativeActualDescriptionFactory)
     {
         _negativeActualDescriptionFactory = negativeActualDescriptionFactory;
         return this;
@@ -64,18 +64,20 @@ internal class AssertionBuilder<TSubject> :
     }
 
     private class BuiltAssertion(
-        Func<TSubject, bool> predicate,
+        Func<TSubject, AssertionEvaluationContext, bool> predicate,
         string expectationDescription,
-        Func<TSubject, string> actualDescriptionFactory,
+        Func<TSubject, AssertionEvaluationContext, string> actualDescriptionFactory,
         string? negativeExpectationDescription,
-        Func<TSubject, string>? negativeActualDescriptionFactory
+        Func<TSubject, AssertionEvaluationContext, string>? negativeActualDescriptionFactory
     ) : IAssertion<TSubject>
     {
-        public bool IsVerified(TSubject actualValue) => predicate(actualValue);
+        public bool IsVerified(TSubject actualValue, AssertionEvaluationContext context) =>
+            predicate(actualValue, context);
 
         public string GetExpectationDescription() => expectationDescription;
 
-        public string GetActualDescription(TSubject actualValue) => actualDescriptionFactory(actualValue);
+        public string GetActualDescription(TSubject actualValue, AssertionEvaluationContext context) =>
+            actualDescriptionFactory(actualValue, context);
 
         public IAssertion<TSubject> GetNegativeAssertion() =>
             new Negative(this, negativeExpectationDescription, negativeActualDescriptionFactory);
@@ -83,14 +85,15 @@ internal class AssertionBuilder<TSubject> :
         private class Negative(
             IAssertion<TSubject> positiveAssertion,
             string? negativeExpectationDescription,
-            Func<TSubject, string>? negativeActualDescriptionFactory
+            Func<TSubject, AssertionEvaluationContext, string>? negativeActualDescriptionFactory
         ) : DefaultNegativeAssertion<TSubject>(positiveAssertion)
         {
             public override string GetExpectationDescription() =>
                 negativeExpectationDescription ?? base.GetExpectationDescription();
 
-            public override string GetActualDescription(TSubject actualValue) =>
-                negativeActualDescriptionFactory?.Invoke(actualValue) ?? base.GetActualDescription(actualValue);
+            public override string GetActualDescription(TSubject actualValue, AssertionEvaluationContext context) =>
+                negativeActualDescriptionFactory?.Invoke(actualValue, context) ??
+                base.GetActualDescription(actualValue, context);
         }
     }
 }
