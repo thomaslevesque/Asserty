@@ -64,19 +64,17 @@ public static class AssertionValueFormatter
     {
         var builder = new StringBuilder(32);
         builder.Append('[');
-        var enumerator = collection.GetEnumerator();
-        using var disposableEnumerator = enumerator as IDisposable;
-        int count = 0;
-        while (enumerator.MoveNext() && count <= 3)
+
+        var items = collection.Cast<object?>().Take(4).ToList();
+        for (int i = 0; i < items.Count && i < 3; i++)
         {
-            if (count > 0)
+            if (i > 0)
                 builder.Append(", ");
-            count++;
-            if (count <= 3)
-                builder.Append(Format(enumerator.Current));
-            else
-                builder.Append('…');
+            builder.Append(Format(items[i]));
         }
+
+        if (items.Count > 3)
+            builder.Append(", …");
 
         builder.Append(']');
         return builder.ToString();
