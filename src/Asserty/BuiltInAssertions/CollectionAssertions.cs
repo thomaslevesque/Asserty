@@ -21,8 +21,7 @@ public static partial class AssertionSubjectExtensions
                 if (actualValue is null)
                     return "it is actually null";
                 int count = actualValue.Count();
-                var elements = count > 1 ? "elements" : "element";
-                return $"{Format(actualValue)} contains {count} {elements}";
+                return $"{Format(actualValue)} contains {count} {Elements(count)}";
             })
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
@@ -50,7 +49,7 @@ public static partial class AssertionSubjectExtensions
             })
             .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
-
-        static string Elements(int count) => count > 1 ? "elements" : "element";
     }
+
+    private static string Elements(int count) => count > 1 ? "elements" : "element";
 }
