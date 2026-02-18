@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Collections;
+using System.Globalization;
 using System.Text;
 
 namespace Asserty.Assertions;
@@ -19,6 +20,7 @@ public static class AssertionValueFormatter
         null => "(null)",
         string s => FormatStringValue(s),
         IEnumerable collection => FormatCollection(collection),
+        IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
         _ => value.ToString() ?? ""
     };
 
