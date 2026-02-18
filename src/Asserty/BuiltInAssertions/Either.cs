@@ -84,7 +84,7 @@ public static partial class AssertionSubjectExtensions
                 {
                     // If the assertion passed, the negated assertion should not, so this should throw the expected
                     // exception. If not, not much we can do to identify the actual failure.
-                    assertion(new NegativeAssertionAsPositive<TSubject>(subject));
+                    assertion(new NegativeSubjectAsPositive<TSubject>(subject));
                     return null;
                 }
                 catch (AssertionException ex)
@@ -108,7 +108,7 @@ public static partial class AssertionSubjectExtensions
 
     // Note: the goal of this class is to make an intentionally failing assertion: the negative subject pretends to be
     // positive, and vice versa.
-    private class NegativeAssertionAsPositive<TSubject>(IPositiveAssertionSubject<TSubject> positiveSubject)
+    private class NegativeSubjectAsPositive<TSubject>(IPositiveAssertionSubject<TSubject> positiveSubject)
         : IPositiveAssertionSubject<TSubject>
     {
         public TSubject Value => positiveSubject.Value;
@@ -118,9 +118,9 @@ public static partial class AssertionSubjectExtensions
             positiveSubject.Verify(assertion.GetNegativeAssertion());
 
         public IAssertionSubject<TResult> Cast<TResult>() => positiveSubject.Cast<TResult>();
-        public INegativeAssertionSubject<TSubject> Not => new PositiveAssertionAsNegative(positiveSubject);
+        public INegativeAssertionSubject<TSubject> Not => new PositiveSubjectAsNegative(positiveSubject);
 
-        private class PositiveAssertionAsNegative(IPositiveAssertionSubject<TSubject> positiveSubject)
+        private class PositiveSubjectAsNegative(IPositiveAssertionSubject<TSubject> positiveSubject)
             : INegativeAssertionSubject<TSubject>
         {
             public TSubject Value => positiveSubject.Value;
