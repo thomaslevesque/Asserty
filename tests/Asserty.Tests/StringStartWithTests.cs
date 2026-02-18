@@ -8,7 +8,7 @@ public static class StringStartWithTests
         public void StartWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().StartWith("Hell"));
+            Expect(() => actual.Should().StartWith("Hell")).ToPass();
         }
 
         [Fact]

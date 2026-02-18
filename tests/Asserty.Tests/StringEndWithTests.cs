@@ -8,7 +8,7 @@ public static class StringEndWithTests
         public void EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().EndWith("World!"));
+            Expect(() => actual.Should().EndWith("World!")).ToPass();
         }
 
         [Fact]

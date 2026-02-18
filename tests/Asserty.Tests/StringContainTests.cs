@@ -8,7 +8,7 @@ public static class StringContainTests
         public void Contain_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Contain("World"));
+            Expect(() => actual.Should().Contain("World")).ToPass();
         }
 
         [Fact]
