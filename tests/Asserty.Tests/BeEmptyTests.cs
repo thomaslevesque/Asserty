@@ -9,13 +9,13 @@ public static class BeEmptyTests
         [Fact]
         public void BeEmpty_Should_Pass()
         {
-            Expect(() => Collection.Should().BeEmpty()).ToPass();
+            Verify.That(() => Collection.Should().BeEmpty()).Passes();
         }
 
         [Fact]
         public void Not_BeEmpty_Should_Fail()
         {
-            Expect(() => Collection.Should().Not.BeEmpty()).ToFail("Expected `Collection` not to be empty, but it is.");
+            Verify.That(() => Collection.Should().Not.BeEmpty()).Fails("Expected `Collection` not to be empty, but it is.");
         }
     }
 
@@ -26,13 +26,13 @@ public static class BeEmptyTests
         [Fact]
         public void BeEmpty_Should_Fail()
         {
-            Expect(() => Collection.Should().BeEmpty()).ToFail("Expected `Collection` to be empty, but [1, 2, 3, …] contains 4 elements.");
+            Verify.That(() => Collection.Should().BeEmpty()).Fails("Expected `Collection` to be empty, but [1, 2, 3, …] contains 4 elements.");
         }
 
         [Fact]
         public void Not_BeEmpty_Should_Pass()
         {
-            Expect(() => Collection.Should().Not.BeEmpty()).ToPass();
+            Verify.That(() => Collection.Should().Not.BeEmpty()).Passes();
         }
     }
 
@@ -43,14 +43,14 @@ public static class BeEmptyTests
         [Fact]
         public void BeEmpty_Should_Fail()
         {
-            Expect(() => Collection.Should().BeEmpty())
-                .ToFail("Expected `Collection` to be empty, but it is actually null.");
+            Verify.That(() => Collection.Should().BeEmpty())
+                .Fails("Expected `Collection` to be empty, but it is actually null.");
         }
 
         [Fact]
         public void Not_BeEmpty_Should_Pass()
         {
-            Expect(() => Collection.Should().Not.BeEmpty()).ToPass();
+            Verify.That(() => Collection.Should().Not.BeEmpty()).Passes();
         }
     }
 }

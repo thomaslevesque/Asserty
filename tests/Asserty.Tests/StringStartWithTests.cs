@@ -8,15 +8,15 @@ public static class StringStartWithTests
         public void StartWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().StartWith("Hell")).ToPass();
+            Verify.That(() => actual.Should().StartWith("Hell")).Passes();
         }
 
         [Fact]
         public void Not_StartWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.StartWith("Hell"))
-                .ToFail("Expected `actual` not to start with \"Hell\", but \"Hello World!\" does.");
+            Verify.That(() => actual.Should().Not.StartWith("Hell"))
+                .Fails("Expected `actual` not to start with \"Hell\", but \"Hello World!\" does.");
         }
     }
 
@@ -26,15 +26,15 @@ public static class StringStartWithTests
         public void StartWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().StartWith("hello", StringComparison.OrdinalIgnoreCase)).ToPass();
+            Verify.That(() => actual.Should().StartWith("hello", StringComparison.OrdinalIgnoreCase)).Passes();
         }
 
         [Fact]
         public void Not_StartWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.StartWith("hello", StringComparison.OrdinalIgnoreCase))
-                .ToFail("Expected `actual` not to start with \"hello\", but \"Hello World!\" does.");
+            Verify.That(() => actual.Should().Not.StartWith("hello", StringComparison.OrdinalIgnoreCase))
+                .Fails("Expected `actual` not to start with \"hello\", but \"Hello World!\" does.");
         }
     }
 
@@ -44,15 +44,15 @@ public static class StringStartWithTests
         public void StartWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().StartWith("hello"))
-                .ToFail("Expected `actual` to start with \"hello\", but \"Hello World!\" doesn't.");
+            Verify.That(() => actual.Should().StartWith("hello"))
+                .Fails("Expected `actual` to start with \"hello\", but \"Hello World!\" doesn't.");
         }
 
         [Fact]
         public void Not_StartWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.StartWith("hello")).ToPass();
+            Verify.That(() => actual.Should().Not.StartWith("hello")).Passes();
         }
     }
 }

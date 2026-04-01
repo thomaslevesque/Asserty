@@ -3,22 +3,22 @@ using Asserty.Internal;
 
 namespace Asserty.Tests;
 
-public static class AssertionTestHelpers
+public static class Verify
 {
-    public static IAssertionTest Expect(Action action, [CallerArgumentExpression(nameof(action))] string expression = null!)
+    public static IAssertionTest That(Action action, [CallerArgumentExpression(nameof(action))] string expression = null!)
     {
         return new AssertionTest(action, expression);
     }
 
     public interface IAssertionTest : IHideObjectMembers
     {
-        void ToPass();
-        void ToFail(string expectedMessage);
+        void Passes();
+        void Fails(string expectedMessage);
     }
 
     private class AssertionTest(Action action, string expression) : IAssertionTest
     {
-        public void ToPass()
+        public void Passes()
         {
             try
             {
@@ -35,7 +35,7 @@ public static class AssertionTestHelpers
             }
         }
 
-        public void ToFail(string expectedMessage)
+        public void Fails(string expectedMessage)
         {
             try
             {

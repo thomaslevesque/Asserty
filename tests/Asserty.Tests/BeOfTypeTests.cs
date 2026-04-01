@@ -8,15 +8,15 @@ public static class BeOfTypeTests
         public void BeOfType_Should_Pass_And_ReturnSubjectOfTheExpectedType()
         {
             object value = "hello";
-            Expect(() => value.Should().BeOfType<string>().And.Contain("ell")).ToPass();
+            Verify.That(() => value.Should().BeOfType<string>().And.Contain("ell")).Passes();
         }
 
         [Fact]
         public void Not_BeOfType_Should_Fail()
         {
             object value = "hello";
-            Expect(() => value.Should().Not.BeOfType<string>())
-                .ToFail("Expected `value` not to be of type `System.String`, but it is actually of that type.");
+            Verify.That(() => value.Should().Not.BeOfType<string>())
+                .Fails("Expected `value` not to be of type `System.String`, but it is actually of that type.");
         }
     }
 
@@ -26,15 +26,15 @@ public static class BeOfTypeTests
         public void BeOfType_Should_Fail()
         {
             object value = 42;
-            Expect(() => value.Should().BeOfType<string>())
-                .ToFail("Expected `value` to be of type `System.String`, but it is actually of type `System.Int32`.");
+            Verify.That(() => value.Should().BeOfType<string>())
+                .Fails("Expected `value` to be of type `System.String`, but it is actually of type `System.Int32`.");
         }
 
         [Fact]
         public void Not_BeOfType_Should_Pass()
         {
             object value = "hello";
-            Expect(() => value.Should().Not.BeOfType<int>()).ToPass();
+            Verify.That(() => value.Should().Not.BeOfType<int>()).Passes();
         }
     }
 
@@ -44,15 +44,15 @@ public static class BeOfTypeTests
         public void BeOfType_Should_Fail()
         {
             object value = "hello";
-            Expect(() => value.Should().BeOfType<object>())
-                .ToFail("Expected `value` to be of type `System.Object`, but it is actually of type `System.String`.");
+            Verify.That(() => value.Should().BeOfType<object>())
+                .Fails("Expected `value` to be of type `System.Object`, but it is actually of type `System.String`.");
         }
 
         [Fact]
         public void Not_BeOfType_Should_Pass()
         {
             object value = "hello";
-            Expect(() => value.Should().Not.BeOfType<object>()).ToPass();
+            Verify.That(() => value.Should().Not.BeOfType<object>()).Passes();
         }
     }
 }

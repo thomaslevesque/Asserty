@@ -9,14 +9,14 @@ public static class HaveCountTests
         [Fact]
         public void HaveCount_Should_Pass()
         {
-            Expect(() => Collection.Should().HaveCount(3)).ToPass();
+            Verify.That(() => Collection.Should().HaveCount(3)).Passes();
         }
 
         [Fact]
         public void Not_HaveCount_Should_Fail()
         {
-            Expect(() => Collection.Should().Not.HaveCount(3))
-                .ToFail("Expected `Collection` not to contain 3 elements, but it does.");
+            Verify.That(() => Collection.Should().Not.HaveCount(3))
+                .Fails("Expected `Collection` not to contain 3 elements, but it does.");
         }
     }
 
@@ -27,14 +27,14 @@ public static class HaveCountTests
         [Fact]
         public void HaveCount_Should_Fail()
         {
-            Expect(() => Collection.Should().HaveCount(3))
-                .ToFail("Expected `Collection` to contain 3 elements, but [1, 2, 3, …] contains 4 elements.");
+            Verify.That(() => Collection.Should().HaveCount(3))
+                .Fails("Expected `Collection` to contain 3 elements, but [1, 2, 3, …] contains 4 elements.");
         }
 
         [Fact]
         public void Not_HaveCount_Should_Pass()
         {
-            Expect(() => Collection.Should().Not.HaveCount(3)).ToPass();
+            Verify.That(() => Collection.Should().Not.HaveCount(3)).Passes();
         }
     }
 
@@ -45,14 +45,14 @@ public static class HaveCountTests
         [Fact]
         public void HaveCount_Should_Fail()
         {
-            Expect(() => Collection.Should().HaveCount(3))
-                .ToFail("Expected `Collection` to contain 3 elements, but it is actually null.");
+            Verify.That(() => Collection.Should().HaveCount(3))
+                .Fails("Expected `Collection` to contain 3 elements, but it is actually null.");
         }
 
         [Fact]
         public void Not_HaveCount_Should_Pass()
         {
-            Expect(() => Collection.Should().Not.HaveCount(3)).ToPass();
+            Verify.That(() => Collection.Should().Not.HaveCount(3)).Passes();
         }
     }
 }

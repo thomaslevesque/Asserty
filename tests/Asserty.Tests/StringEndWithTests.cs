@@ -8,15 +8,15 @@ public static class StringEndWithTests
         public void EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().EndWith("World!")).ToPass();
+            Verify.That(() => actual.Should().EndWith("World!")).Passes();
         }
 
         [Fact]
         public void Not_EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.EndWith("World!"))
-                .ToFail("Expected `actual` not to end with \"World!\", but \"Hello World!\" does.");
+            Verify.That(() => actual.Should().Not.EndWith("World!"))
+                .Fails("Expected `actual` not to end with \"World!\", but \"Hello World!\" does.");
         }
     }
 
@@ -26,15 +26,15 @@ public static class StringEndWithTests
         public void EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().EndWith("world!", StringComparison.OrdinalIgnoreCase)).ToPass();
+            Verify.That(() => actual.Should().EndWith("world!", StringComparison.OrdinalIgnoreCase)).Passes();
         }
 
         [Fact]
         public void Not_EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.EndWith("world!", StringComparison.OrdinalIgnoreCase))
-                .ToFail("Expected `actual` not to end with \"world!\", but \"Hello World!\" does.");
+            Verify.That(() => actual.Should().Not.EndWith("world!", StringComparison.OrdinalIgnoreCase))
+                .Fails("Expected `actual` not to end with \"world!\", but \"Hello World!\" does.");
         }
     }
 
@@ -44,15 +44,15 @@ public static class StringEndWithTests
         public void EndWith_Should_Fail()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().EndWith("world!"))
-                .ToFail("Expected `actual` to end with \"world!\", but \"Hello World!\" doesn't.");
+            Verify.That(() => actual.Should().EndWith("world!"))
+                .Fails("Expected `actual` to end with \"world!\", but \"Hello World!\" doesn't.");
         }
 
         [Fact]
         public void Not_EndWith_Should_Pass()
         {
             const string actual = "Hello World!";
-            Expect(() => actual.Should().Not.EndWith("world!")).ToPass();
+            Verify.That(() => actual.Should().Not.EndWith("world!")).Passes();
         }
     }
 }
