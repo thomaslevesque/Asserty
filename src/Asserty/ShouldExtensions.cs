@@ -22,13 +22,6 @@ public static class ShouldExtensions
     /// value and use a language version earlier than C# 10.</exception>
     public static IPositiveAssertionSubject<TSubject> Should<TSubject>(this TSubject value, [CallerArgumentExpression(nameof(value))] string expression = null!)
     {
-        if (string.IsNullOrWhiteSpace(expression))
-        {
-            throw new ArgumentException(
-                "In order to have meaningful assertion failure messages, expression must not be null or empty. Just leave it unspecified, the compiler will provide the value (requires C# 10 or later).",
-                nameof(expression));
-        }
-
-        return new PositiveAssertionSubject<TSubject>(value, expression);
+        return AssertionSubjectFactory.CreatePositive(value, expression);
     }
 }
