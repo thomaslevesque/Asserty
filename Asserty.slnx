@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Asserty/Asserty.csproj" />
   </Folder>
@@ -11,6 +16,7 @@
   <Folder Name="/_/">
     <File Path=".gitignore" />
     <File Path="build.ps1" />
+    <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
 </Solution>
