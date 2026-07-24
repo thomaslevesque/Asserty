@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Asserty/Asserty.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Asserty.Tests/Asserty.Tests.csproj" />
+  </Folder>
+  <Folder Name="/_/">
+    <File Path="README.md" />
+  </Folder>
+</Solution>
