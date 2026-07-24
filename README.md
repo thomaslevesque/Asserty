@@ -49,7 +49,7 @@ just pick the one that feels most natural to you.
 In the rest of the documentation, we'll use the **Should** API for examples, but all assertions are available in both
 flavors.
 
-### Extensibility
+## Extensibility
 
 Extending Asserty to add your own assertions is fairly easy. For example, if you wanted to add an assertion that checks
 whether a string is a palindrome, you could write an extension method like this:
