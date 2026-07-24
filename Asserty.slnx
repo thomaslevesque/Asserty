@@ -5,7 +5,12 @@
   <Folder Name="/tests/">
     <Project Path="tests/Asserty.Tests/Asserty.Tests.csproj" />
   </Folder>
+  <Folder Name="/tools/">
+    <File Path="tools/Build.cs" />
+  </Folder>
   <Folder Name="/_/">
+    <File Path=".gitignore" />
+    <File Path="build.ps1" />
     <File Path="README.md" />
   </Folder>
 </Solution>
