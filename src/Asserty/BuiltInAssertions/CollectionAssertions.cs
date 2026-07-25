@@ -185,8 +185,8 @@ public static partial class AssertionSubjectExtensions
             })
             .ExpectValue($"to be the same sequence as {Format(expectedSequence)}")
             .DescribeActual((actualValue, context) => actualValue is null
-                ? "it is actually null"
-                : $"it is actually {Format(actualValue)} (first difference at position {context.Get<int>("differencePosition")})")
+                ? "it is null"
+                : $"{Format(actualValue)} differs at position {context.Get<int>("differencePosition")}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }

@@ -46,7 +46,7 @@ public static class BeSameSequenceAsTests
         public void BeSameSequenceAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().BeSameSequenceAs([1, 3, 2]))
-                .Fails("Expected `Actual` to be the same sequence as [1, 3, 2], but it is actually [1, 2, 3] (first difference at position 1).");
+                .Fails("Expected `Actual` to be the same sequence as [1, 3, 2], but [1, 2, 3] differs at position 1.");
         }
 
         [Fact]
@@ -54,17 +54,17 @@ public static class BeSameSequenceAsTests
         {
             Verify.That(() => Actual.Should().Not.BeSameSequenceAs([1, 3, 2])).Passes();
         }
+    }
 
-        public class WhenValueAndExpectedSequenceHaveDifferentLengths
+    public class WhenValueAndExpectedSequenceHaveDifferentLengths
+    {
+        private static readonly int[] Actual = [1, 2];
+
+        [Fact]
+        public void BeSameSequenceAs_Should_Fail()
         {
-            private static readonly int[] Actual = [1, 2];
-
-            [Fact]
-            public void BeSameSequenceAs_Should_Fail()
-            {
-                Verify.That(() => Actual.Should().BeSameSequenceAs([1, 2, 3]))
-                    .Fails("Expected `Actual` to be the same sequence as [1, 2, 3], but it is actually [1, 2] (first difference at position 2).");
-            }
+            Verify.That(() => Actual.Should().BeSameSequenceAs([1, 2, 3]))
+                .Fails("Expected `Actual` to be the same sequence as [1, 2, 3], but [1, 2] differs at position 2.");
         }
     }
 
@@ -76,7 +76,7 @@ public static class BeSameSequenceAsTests
         public void BeSameSequenceAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().BeSameSequenceAs([1, 2, 3]))
-                .Fails("Expected `Actual` to be the same sequence as [1, 2, 3], but it is actually null.");
+                .Fails("Expected `Actual` to be the same sequence as [1, 2, 3], but it is null.");
         }
 
         [Fact]
