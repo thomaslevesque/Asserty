@@ -51,5 +51,33 @@ public static partial class AssertionSubjectExtensions
         return subject.Verify(assertion);
     }
 
+    /// <summary>
+    /// Asserts that the subject's value contains the same elements as the specified sequence, in the same order.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="expectedSequence">The expected sequence of elements.</param>
+    /// <param name="equalityComparer">The equality comparer to use to compare elements. If null, the default comparer
+    /// for this type will be used.</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> BeSameSequenceAs<T>(
+        this IAssertionSubject<IEnumerable<T>?> subject,
+        IEnumerable<T> expectedSequence,
+        IEqualityComparer<T>? equalityComparer = null)
+    {
+        ArgumentNullException.ThrowIfNull(expectedSequence);
+
+        var actualComparer = equalityComparer ?? EqualityComparer<T>.Default;
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify(actualValue => actualValue is not null && actualValue.SequenceEqual(expectedSequence, actualComparer))
+            .ExpectValue($"to be the same sequence as {Format(expectedSequence)}")
+            .DescribeActual(actualValue => actualValue is null
+                ? "it is actually null"
+                : $"it is actually {Format(actualValue)}")
+            .DescribeActualWhenNegated(_ => "it is");
+        return subject.Verify(assertion);
+    }
+
     private static string Elements(int count) => count > 1 ? "elements" : "element";
 }
