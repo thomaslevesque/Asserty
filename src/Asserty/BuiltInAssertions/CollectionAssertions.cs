@@ -70,11 +70,37 @@ public static partial class AssertionSubjectExtensions
 
         var actualComparer = equalityComparer ?? EqualityComparer<T>.Default;
         var assertion = AssertionBuilder.For<IEnumerable<T>?>()
-            .Verify(actualValue => actualValue is not null && actualValue.SequenceEqual(expectedSequence, actualComparer))
+            .Verify((actualValue, context) =>
+            {
+                if (actualValue is null)
+                    return false;
+
+                using var actualEnumerator = actualValue.GetEnumerator();
+                using var expectedEnumerator = expectedSequence.GetEnumerator();
+
+                var position = 0;
+                while (true)
+                {
+                    var hasActual = actualEnumerator.MoveNext();
+                    var hasExpected = expectedEnumerator.MoveNext();
+                    if (!hasActual && !hasExpected)
+                        return true;
+
+                    if (!hasActual
+                        || !hasExpected
+                        || !actualComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
+                    {
+                        context.Set("differencePosition", position);
+                        return false;
+                    }
+
+                    position++;
+                }
+            })
             .ExpectValue($"to be the same sequence as {Format(expectedSequence)}")
-            .DescribeActual(actualValue => actualValue is null
+            .DescribeActual((actualValue, context) => actualValue is null
                 ? "it is actually null"
-                : $"it is actually {Format(actualValue)}")
+                : $"it is actually {Format(actualValue)} (first difference at position {context.Get<int>("differencePosition")})")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
