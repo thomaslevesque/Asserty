@@ -191,6 +191,32 @@ public static partial class AssertionSubjectExtensions
         return subject.Verify(assertion);
     }
 
+    /// <summary>
+    /// Asserts that the subject's value contains the specified element.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="expectedElement">The element that the collection must contain.</param>
+    /// <param name="equalityComparer">The equality comparer to use to compare elements. If null, the default comparer
+    /// for this type will be used.</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> Contain<T>(
+        this IAssertionSubject<IEnumerable<T>?> subject,
+        T expectedElement,
+        IEqualityComparer<T>? equalityComparer = null)
+    {
+        var actualComparer = equalityComparer ?? EqualityComparer<T>.Default;
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify(actualValue => actualValue?.Contains(expectedElement, actualComparer) ?? false)
+            .ExpectValue($"to contain {Format(expectedElement)}")
+            .DescribeActual(actualValue => actualValue is null
+                ? "it is null"
+                : $"{Format(actualValue)} doesn't")
+            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+        return subject.Verify(assertion);
+    }
+
     private static string Elements(int count) => count > 1 ? "elements" : "element";
 
     private readonly record struct Box<TValue>(TValue Value);
