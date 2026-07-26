@@ -74,20 +74,20 @@ public static class CollectionContainTests
         }
     }
 
-    public class WhenCollectionContainsExpectedNullItem
+    public class WhenCollectionContainsExpectedNullElement
     {
         private static readonly string?[] Actual = ["hello", null, "world"];
 
         [Fact]
         public void Contain_Should_Pass()
         {
-            Verify.That(() => Actual.Should().Contain(null)).Passes();
+            Verify.That(() => Actual.Should().Contain((string?)null)).Passes();
         }
 
         [Fact]
         public void Not_Contain_Should_Fail()
         {
-            Verify.That(() => Actual.Should().Not.Contain(null))
+            Verify.That(() => Actual.Should().Not.Contain((string?)null))
                 .Fails("Expected `Actual` not to contain (null), but [\"hello\", (null), \"world\"] does.");
         }
     }
@@ -107,6 +107,71 @@ public static class CollectionContainTests
         public void Not_Contain_Should_Pass()
         {
             Verify.That(() => Actual.Should().Not.Contain(1)).Passes();
+        }
+    }
+
+    public class WhenCollectionContainsElementMatchingPredicate
+    {
+        private static readonly int[] Actual = [1, 2, 3];
+
+        [Fact]
+        public void Contain_WithPredicate_Should_Pass()
+        {
+            Verify.That(() => Actual.Should().Contain(x => x > 2)).Passes();
+        }
+
+        [Fact]
+        public void Not_Contain_WithPredicate_Should_Fail()
+        {
+            Verify.That(() => Actual.Should().Not.Contain(x => x > 2))
+                .Fails("Expected `Actual` not to contain an element matching `x => x > 2`, but [1, 2, 3] does.");
+        }
+    }
+
+    public class WhenCollectionDoesNotContainElementMatchingPredicate
+    {
+        private static readonly int[] Actual = [1, 2, 3];
+
+        [Fact]
+        public void Contain_WithPredicate_Should_Fail()
+        {
+            Verify.That(() => Actual.Should().Contain(x => x > 10))
+                .Fails("Expected `Actual` to contain an element matching `x => x > 10`, but [1, 2, 3] doesn't.");
+        }
+
+        [Fact]
+        public void Not_Contain_WithPredicate_Should_Pass()
+        {
+            Verify.That(() => Actual.Should().Not.Contain(x => x > 10)).Passes();
+        }
+    }
+
+    public class WhenCollectionIsNullAndPredicateIsUsed
+    {
+        private static readonly int[]? Actual = null;
+
+        [Fact]
+        public void Contain_WithPredicate_Should_Fail()
+        {
+            Verify.That(() => Actual.Should().Contain(x => x > 0))
+                .Fails("Expected `Actual` to contain an element matching `x => x > 0`, but it is null.");
+        }
+
+        [Fact]
+        public void Not_Contain_WithPredicate_Should_Pass()
+        {
+            Verify.That(() => Actual.Should().Not.Contain(x => x > 0)).Passes();
+        }
+    }
+
+    public class WhenPredicateIsNull
+    {
+        private static readonly int[] Actual = [1, 2, 3];
+
+        [Fact]
+        public void Contain_WithNullPredicate_Should_Throw()
+        {
+            Assert.Throws<ArgumentNullException>(() => Actual.Should().Contain((Func<int, bool>)null!));
         }
     }
 }

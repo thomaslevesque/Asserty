@@ -1,4 +1,5 @@
 ﻿using Asserty.Assertions;
+using System.Runtime.CompilerServices;
 
 namespace Asserty;
 
@@ -210,6 +211,31 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<IEnumerable<T>?>()
             .Verify(actualValue => actualValue?.Contains(expectedElement, actualComparer) ?? false)
             .ExpectValue($"to contain {Format(expectedElement)}")
+            .DescribeActual(actualValue => actualValue is null
+                ? "it is null"
+                : $"{Format(actualValue)} doesn't")
+            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+        return subject.Verify(assertion);
+    }
+
+    /// <summary>
+    /// Asserts that the subject's value contains at least one element matching the specified predicate.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="predicate">The predicate that at least one element must satisfy.</param>
+    /// <param name="predicateExpression">The expression text of the predicate (captured automatically by the compiler).</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> Contain<T>(
+        this IAssertionSubject<IEnumerable<T>?> subject,
+        Func<T, bool> predicate,
+        [CallerArgumentExpression(nameof(predicate))] string predicateExpression = null!)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify(actualValue => actualValue?.Any(predicate) ?? false)
+            .ExpectValue($"to contain an element matching `{predicateExpression}`")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
                 : $"{Format(actualValue)} doesn't")
