@@ -20,8 +20,8 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(actualValue => actualComparer.Equals(expectedValue, actualValue))
             .ExpectValue($"to be equal to {Format(expectedValue)}")
-            .DescribeActual(actualValue => $"it is actually {Format(actualValue)}")
-            .DescribeActualWhenNegated(_ => "it is actually equal");
+            .DescribeActual(_ => "it's not")
+            .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
 }

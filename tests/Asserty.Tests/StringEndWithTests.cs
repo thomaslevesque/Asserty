@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class StringEndWithTests
 {
@@ -16,7 +16,7 @@ public static class StringEndWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.EndWith("World!"))
-                .Fails("Expected `actual` not to end with \"World!\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to end with \"World!\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -34,7 +34,7 @@ public static class StringEndWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.EndWith("world!", StringComparison.OrdinalIgnoreCase))
-                .Fails("Expected `actual` not to end with \"world!\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to end with \"world!\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -45,7 +45,7 @@ public static class StringEndWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().EndWith("world!"))
-                .Fails("Expected `actual` to end with \"world!\", but \"Hello World!\" doesn't.");
+                .Fails("Expected `actual` to end with \"world!\", but it doesn't. Actual value: \"Hello World!\"");
         }
 
         [Fact]

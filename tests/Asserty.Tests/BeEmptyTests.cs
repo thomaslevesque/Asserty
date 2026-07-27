@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class BeEmptyTests
 {
@@ -15,7 +15,7 @@ public static class BeEmptyTests
         [Fact]
         public void Not_BeEmpty_Should_Fail()
         {
-            Verify.That(() => Collection.Should().Not.BeEmpty()).Fails("Expected `Collection` not to be empty, but it is.");
+            Verify.That(() => Collection.Should().Not.BeEmpty()).Fails("Expected `Collection` not to be empty, but it is. Actual value: []");
         }
     }
 
@@ -26,7 +26,7 @@ public static class BeEmptyTests
         [Fact]
         public void BeEmpty_Should_Fail()
         {
-            Verify.That(() => Collection.Should().BeEmpty()).Fails("Expected `Collection` to be empty, but [1, 2, 3, …] contains 4 elements.");
+            Verify.That(() => Collection.Should().BeEmpty()).Fails("Expected `Collection` to be empty, but it contains 4 elements. Actual value: [1, 2, 3, …]");
         }
 
         [Fact]
@@ -44,7 +44,7 @@ public static class BeEmptyTests
         public void BeEmpty_Should_Fail()
         {
             Verify.That(() => Collection.Should().BeEmpty())
-                .Fails("Expected `Collection` to be empty, but it is actually null.");
+                .Fails("Expected `Collection` to be empty, but it is null. Actual value: (null)");
         }
 
         [Fact]

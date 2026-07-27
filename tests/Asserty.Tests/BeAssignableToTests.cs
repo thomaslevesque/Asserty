@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class BeAssignableToTests
 {
@@ -16,7 +16,7 @@ public static class BeAssignableToTests
         {
             object value = "hello";
             Verify.That(() => value.Should().Not.BeAssignableTo<string>())
-                .Fails("Expected `value` not to be assignable to `System.String`, but it is actually of that type.");
+                .Fails("Expected `value` not to be assignable to `System.String`, but it is of that type. Actual value: \"hello\"");
         }
     }
 
@@ -27,7 +27,7 @@ public static class BeAssignableToTests
         {
             object value = 42;
             Verify.That(() => value.Should().BeAssignableTo<string>())
-                .Fails("Expected `value` to be assignable to `System.String`, but it is actually of type `System.Int32`, which is not assignable to `System.String`.");
+                .Fails("Expected `value` to be assignable to `System.String`, but it is of type `System.Int32`, which is not assignable to `System.String`. Actual value: 42");
         }
 
         [Fact]
@@ -52,7 +52,7 @@ public static class BeAssignableToTests
         {
             object value = "hello";
             Verify.That(() => value.Should().Not.BeAssignableTo<object>())
-                .Fails("Expected `value` not to be assignable to `System.Object`, but it is actually of type `System.String`, which is assignable to `System.Object`.");
+                .Fails("Expected `value` not to be assignable to `System.Object`, but it is of type `System.String`, which is assignable to `System.Object`. Actual value: \"hello\"");
         }
     }
 }

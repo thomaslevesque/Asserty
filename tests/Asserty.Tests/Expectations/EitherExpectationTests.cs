@@ -1,4 +1,4 @@
-﻿using static Asserty.Expectations;
+using static Asserty.Expectations;
 
 namespace Asserty.Tests.Expectations;
 
@@ -19,8 +19,8 @@ public class EitherExpectationTests
         Verify.That(() => Expect(value).To.Either(s => s.BeNull(), s => s.HaveLength(5))).Fails(
             """
             Expected either of multiple assertions to pass, but none does. Assertion failure messages:
-            - Expected `value` to be null, but it is actually "foo".
-            - Expected `value` to have a length of 5 characters, but its actual length is 3.
+            - Expected `value` to be null, but it's not. Actual value: "foo"
+            - Expected `value` to have a length of 5 characters, but its length is 3. Actual value: "foo"
             """);
     }
 
@@ -39,8 +39,8 @@ public class EitherExpectationTests
         Verify.That(() => Expect(value).To.Either(s => s.Not.StartWith("hell"), s => s.Not.HaveLength(5))).Fails(
             """
             Expected either of multiple assertions to pass, but none does. Assertion failure messages:
-            - Expected `value` not to start with "hell", but "hello" does.
-            - Expected `value` not to have a length of 5 characters, but it does.
+            - Expected `value` not to start with "hell", but it does. Actual value: "hello"
+            - Expected `value` not to have a length of 5 characters, but it does. Actual value: "hello"
             """);
     }
 }

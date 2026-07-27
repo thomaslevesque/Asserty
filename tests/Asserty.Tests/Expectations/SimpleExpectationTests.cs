@@ -1,4 +1,4 @@
-﻿using static Asserty.Expectations;
+using static Asserty.Expectations;
 
 namespace Asserty.Tests.Expectations;
 
@@ -18,7 +18,7 @@ public static class SimpleExpectationTests
         {
             const string actual = "hello";
             Verify.That(() => Expect(actual).Not.To.BeEqualTo("hello"))
-                .Fails("Expected `actual` not to be equal to \"hello\", but it is actually equal.");
+                .Fails("Expected `actual` not to be equal to \"hello\", but it is. Actual value: \"hello\"");
         }
     }
 
@@ -29,7 +29,7 @@ public static class SimpleExpectationTests
         {
             const string actual = "hi";
             Verify.That(() => Expect(actual).To.BeEqualTo("hello"))
-                .Fails("Expected `actual` to be equal to \"hello\", but it is actually \"hi\".");
+                .Fails("Expected `actual` to be equal to \"hello\", but it's not. Actual value: \"hi\"");
         }
 
         [Fact]

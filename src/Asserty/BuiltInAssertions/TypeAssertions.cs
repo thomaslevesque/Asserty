@@ -17,9 +17,9 @@ public static partial class AssertionSubjectExtensions
             .Verify(actualValue => actualValue?.GetType() == typeof(TExpected))
             .ExpectValue($"to be of type `{typeof(TExpected)}`")
             .DescribeActual(actualValue => actualValue is null
-                ? "it is actually null"
-                : $"it is actually of type `{actualValue.GetType()}`")
-            .DescribeActualWhenNegated(_ => "it is actually of that type");
+                ? "it is null"
+                : $"it is of type `{actualValue.GetType()}`")
+            .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion).Cast<TExpected>();
     }
 
@@ -36,14 +36,14 @@ public static partial class AssertionSubjectExtensions
             .Verify(actualValue => actualValue is TExpected)
             .ExpectValue($"to be assignable to `{typeof(TExpected)}`")
             .DescribeActual(actualValue => actualValue is null
-                ? "it is actually null"
-                : $"it is actually of type `{actualValue.GetType()}`, which is not assignable to `{typeof(TExpected)}`")
+                ? "it is null"
+                : $"it is of type `{actualValue.GetType()}`, which is not assignable to `{typeof(TExpected)}`")
             .DescribeActualWhenNegated(actualValue =>
             {
                 var actualType = actualValue?.GetType();
                 return actualType == typeof(TExpected)
-                    ? "it is actually of that type"
-                    : $"it is actually of type `{actualType}`, which is assignable to `{typeof(TExpected)}`";
+                    ? "it is of that type"
+                    : $"it is of type `{actualType}`, which is assignable to `{typeof(TExpected)}`";
             });
         return subject.Verify(assertion).Cast<TExpected>();
     }

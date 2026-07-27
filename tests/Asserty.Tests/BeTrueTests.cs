@@ -16,7 +16,7 @@ public static class BeTrueTests
         {
             const bool value = true;
             Verify.That(() => value.Should().Not.BeTrue())
-                .Fails("Expected `value` not to be true, but it is.");
+                .Fails("Expected `value` not to be true, but it is. Actual value: True");
         }
 
     }
@@ -28,7 +28,7 @@ public static class BeTrueTests
         {
             const bool value = false;
             Verify.That(() => value.Should().BeTrue())
-                .Fails("Expected `value` to be true, but it is false.");
+                .Fails("Expected `value` to be true, but it is false. Actual value: False");
         }
 
         [Fact]

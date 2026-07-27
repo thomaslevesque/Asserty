@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class BeNullTests
 {
@@ -16,7 +16,7 @@ public static class BeNullTests
         {
             const string? value = null;
             Verify.That(() => value.Should().Not.BeNull())
-                .Fails("Expected `value` not to be null, but it is actually null.");
+                .Fails("Expected `value` not to be null, but it is. Actual value: (null)");
         }
     }
 
@@ -27,7 +27,7 @@ public static class BeNullTests
         {
             const string value = "hello";
             Verify.That(() => value.Should().BeNull())
-                .Fails("Expected `value` to be null, but it is actually \"hello\".");
+                .Fails("Expected `value` to be null, but it's not. Actual value: \"hello\"");
         }
 
         [Fact]

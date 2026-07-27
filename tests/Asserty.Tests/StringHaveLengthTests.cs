@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class StringHaveLengthTests
 {
@@ -15,7 +15,7 @@ public static class StringHaveLengthTests
         public void Not_HaveLength_Should_Fail()
         {
             const string actual = "hello";
-            Verify.That(() => actual.Should().Not.HaveLength(5)).Fails("Expected `actual` not to have a length of 5 characters, but it does.");
+            Verify.That(() => actual.Should().Not.HaveLength(5)).Fails("Expected `actual` not to have a length of 5 characters, but it does. Actual value: \"hello\"");
         }
     }
 
@@ -25,7 +25,7 @@ public static class StringHaveLengthTests
         public void HaveLength_Should_Fail()
         {
             const string actual = "foo";
-            Verify.That(() => actual.Should().HaveLength(5)).Fails("Expected `actual` to have a length of 5 characters, but its actual length is 3.");
+            Verify.That(() => actual.Should().HaveLength(5)).Fails("Expected `actual` to have a length of 5 characters, but its length is 3. Actual value: \"foo\"");
         }
 
         [Fact]
@@ -42,7 +42,7 @@ public static class StringHaveLengthTests
         public void HaveLength_Should_Fail()
         {
             const string? actual = null;
-            Verify.That(() => actual.Should().HaveLength(5)).Fails("Expected `actual` to have a length of 5 characters, but it is null.");
+            Verify.That(() => actual.Should().HaveLength(5)).Fails("Expected `actual` to have a length of 5 characters, but it is null. Actual value: (null)");
         }
 
         [Fact]

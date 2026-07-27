@@ -16,7 +16,7 @@ public static class BeEqualToTests
         {
             const string actual = "hello";
             Verify.That(() => actual.Should().Not.BeEqualTo("hello"))
-                .Fails("Expected `actual` not to be equal to \"hello\", but it is actually equal.");
+                .Fails("Expected `actual` not to be equal to \"hello\", but it is. Actual value: \"hello\"");
         }
     }
 
@@ -34,7 +34,7 @@ public static class BeEqualToTests
         {
             const string actual = "HeLlO";
             Verify.That(() => actual.Should().Not.BeEqualTo("hello", StringComparer.OrdinalIgnoreCase))
-                .Fails("Expected `actual` not to be equal to \"hello\", but it is actually equal.");
+                .Fails("Expected `actual` not to be equal to \"hello\", but it is. Actual value: \"HeLlO\"");
         }
     }
 
@@ -45,7 +45,7 @@ public static class BeEqualToTests
         {
             const string actual = "hi";
             Verify.That(() => actual.Should().BeEqualTo("hello"))
-                .Fails("Expected `actual` to be equal to \"hello\", but it is actually \"hi\".");
+                .Fails("Expected `actual` to be equal to \"hello\", but it's not. Actual value: \"hi\"");
         }
 
         [Fact]

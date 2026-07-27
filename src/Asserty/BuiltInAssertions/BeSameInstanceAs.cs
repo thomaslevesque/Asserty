@@ -18,7 +18,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(value => ReferenceEquals(value, expected))
             .ExpectValue($"to be the same instance as {Format(expected)}")
-            .DescribeActual(value => value is null ? "it is null" : $"it is a different instance: {Format(value)}")
+            .DescribeActual(_ => "it's not")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }

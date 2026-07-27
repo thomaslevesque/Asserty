@@ -33,6 +33,6 @@ internal static class AssertionHelper
         string actualDescription)
     {
         var expectationDescription = assertion.GetExpectationDescription();
-        return $"Expected `{subject.Expression}` {expectationDescription}, but {actualDescription}.";
+        return $"Expected `{subject.Expression}` {expectationDescription}, but {actualDescription}. Actual value: {Format(subject.Value)}";
     }
 }

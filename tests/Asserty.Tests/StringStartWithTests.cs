@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class StringStartWithTests
 {
@@ -16,7 +16,7 @@ public static class StringStartWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.StartWith("Hell"))
-                .Fails("Expected `actual` not to start with \"Hell\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to start with \"Hell\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -34,7 +34,7 @@ public static class StringStartWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.StartWith("hello", StringComparison.OrdinalIgnoreCase))
-                .Fails("Expected `actual` not to start with \"hello\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to start with \"hello\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -45,7 +45,7 @@ public static class StringStartWithTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().StartWith("hello"))
-                .Fails("Expected `actual` to start with \"hello\", but \"Hello World!\" doesn't.");
+                .Fails("Expected `actual` to start with \"hello\", but it doesn't. Actual value: \"Hello World!\"");
         }
 
         [Fact]

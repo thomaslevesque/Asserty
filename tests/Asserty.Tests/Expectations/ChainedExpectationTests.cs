@@ -1,4 +1,4 @@
-﻿using static Asserty.Expectations;
+using static Asserty.Expectations;
 
 namespace Asserty.Tests.Expectations;
 
@@ -37,7 +37,7 @@ public class ChainedExpectationTests
     {
         const string value = "hello";
         Verify.That(() => Expect(value).To.Contain("blah").And.BeEqualTo("hello"))
-            .Fails("Expected `value` to contain \"blah\", but \"hello\" doesn't.");
+            .Fails("Expected `value` to contain \"blah\", but it doesn't. Actual value: \"hello\"");
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class ChainedExpectationTests
     {
         const string value = "hello";
         Verify.That(() => Expect(value).To.Not.Contain("ell").And.BeEqualTo("hello"))
-            .Fails("Expected `value` not to contain \"ell\", but \"hello\" does.");
+            .Fails("Expected `value` not to contain \"ell\", but it does. Actual value: \"hello\"");
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public class ChainedExpectationTests
     {
         const string value = "hello";
         Verify.That(() => Expect(value).To.Contain("ell").And.BeEqualTo("blah"))
-            .Fails("Expected `value` to be equal to \"blah\", but it is actually \"hello\".");
+            .Fails("Expected `value` to be equal to \"blah\", but it's not. Actual value: \"hello\"");
     }
 
     [Fact]
@@ -61,6 +61,6 @@ public class ChainedExpectationTests
     {
         const string value = "hello";
         Verify.That(() => Expect(value).To.Contain("ell").And.Not.BeEqualTo("hello"))
-            .Fails("Expected `value` not to be equal to \"hello\", but it is actually equal.");
+            .Fails("Expected `value` not to be equal to \"hello\", but it is. Actual value: \"hello\"");
     }
 }

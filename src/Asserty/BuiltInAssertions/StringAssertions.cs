@@ -22,8 +22,8 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to contain {Format(substring)}")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} doesn't")
-            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+                : "it doesn't")
+            .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }
 
@@ -45,8 +45,8 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to start with {Format(prefix)}")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} doesn't")
-            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+                : "it doesn't")
+            .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }
 
@@ -68,8 +68,8 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to end with {Format(suffix)}")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} doesn't")
-            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+                : "it doesn't")
+            .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }
 
@@ -87,7 +87,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<string?>()
             .Verify(s => s is not null && s.Length == length)
             .ExpectValue($"to have a length of {length} characters")
-            .DescribeActual(s => s is null ? "it is null" : $"its actual length is {s.Length}")
+            .DescribeActual(s => s is null ? "it is null" : $"its length is {s.Length}")
             .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }

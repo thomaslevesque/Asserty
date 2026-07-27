@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class BeOfTypeTests
 {
@@ -16,7 +16,7 @@ public static class BeOfTypeTests
         {
             object value = "hello";
             Verify.That(() => value.Should().Not.BeOfType<string>())
-                .Fails("Expected `value` not to be of type `System.String`, but it is actually of that type.");
+                .Fails("Expected `value` not to be of type `System.String`, but it is. Actual value: \"hello\"");
         }
     }
 
@@ -27,7 +27,7 @@ public static class BeOfTypeTests
         {
             object value = 42;
             Verify.That(() => value.Should().BeOfType<string>())
-                .Fails("Expected `value` to be of type `System.String`, but it is actually of type `System.Int32`.");
+                .Fails("Expected `value` to be of type `System.String`, but it is of type `System.Int32`. Actual value: 42");
         }
 
         [Fact]
@@ -45,7 +45,7 @@ public static class BeOfTypeTests
         {
             object value = "hello";
             Verify.That(() => value.Should().BeOfType<object>())
-                .Fails("Expected `value` to be of type `System.Object`, but it is actually of type `System.String`.");
+                .Fails("Expected `value` to be of type `System.Object`, but it is of type `System.String`. Actual value: \"hello\"");
         }
 
         [Fact]

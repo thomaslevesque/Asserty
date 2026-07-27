@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class StringContainTests
 {
@@ -16,7 +16,7 @@ public static class StringContainTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.Contain("World"))
-                .Fails("Expected `actual` not to contain \"World\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to contain \"World\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -34,7 +34,7 @@ public static class StringContainTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Not.Contain("world", StringComparison.OrdinalIgnoreCase))
-                .Fails("Expected `actual` not to contain \"world\", but \"Hello World!\" does.");
+                .Fails("Expected `actual` not to contain \"world\", but it does. Actual value: \"Hello World!\"");
         }
     }
 
@@ -45,7 +45,7 @@ public static class StringContainTests
         {
             const string actual = "Hello World!";
             Verify.That(() => actual.Should().Contain("world"))
-                .Fails("Expected `actual` to contain \"world\", but \"Hello World!\" doesn't.");
+                .Fails("Expected `actual` to contain \"world\", but it doesn't. Actual value: \"Hello World!\"");
         }
 
         [Fact]

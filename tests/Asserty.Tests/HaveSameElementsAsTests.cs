@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class HaveSameElementsAsTests
 {
@@ -16,7 +16,7 @@ public static class HaveSameElementsAsTests
         public void Not_HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.HaveSameElementsAs([1, 3, 2, 3]))
-                .Fails("Expected `Actual` not to have the same elements as [1, 3, 2, …], but it does.");
+                .Fails("Expected `Actual` not to have the same elements as [1, 3, 2, …], but it does. Actual value: [3, 1, 2, …]");
         }
     }
 
@@ -34,7 +34,7 @@ public static class HaveSameElementsAsTests
         public void Not_HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.HaveSameElementsAs([null, "WORLD", "HELLO"], StringComparer.OrdinalIgnoreCase))
-                .Fails("Expected `Actual` not to have the same elements as [(null), \"WORLD\", \"HELLO\"], but it does.");
+                .Fails("Expected `Actual` not to have the same elements as [(null), \"WORLD\", \"HELLO\"], but it does. Actual value: [\"hello\", (null), \"world\"]");
         }
     }
 
@@ -46,7 +46,7 @@ public static class HaveSameElementsAsTests
         public void HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().HaveSameElementsAs([1, 3, 2, 3]))
-                .Fails("Expected `Actual` to have the same elements as [1, 3, 2, …], but [3, 1, 2] does not (missing expected element 3).");
+                .Fails("Expected `Actual` to have the same elements as [1, 3, 2, …], but it doesn't (missing expected element 3). Actual value: [3, 1, 2]");
         }
 
         [Fact]
@@ -64,7 +64,7 @@ public static class HaveSameElementsAsTests
         public void HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().HaveSameElementsAs([null, null, "hello"]))
-                .Fails("Expected `Actual` to have the same elements as [(null), (null), \"hello\"], but [(null), \"hello\"] does not (missing expected element (null)).");
+                .Fails("Expected `Actual` to have the same elements as [(null), (null), \"hello\"], but it doesn't (missing expected element (null)). Actual value: [(null), \"hello\"]");
         }
     }
 
@@ -76,7 +76,7 @@ public static class HaveSameElementsAsTests
         public void HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().HaveSameElementsAs([1, 2, 3]))
-                .Fails("Expected `Actual` to have the same elements as [1, 2, 3], but [1, 2, 3, …] does not (contains unexpected element 4).");
+                .Fails("Expected `Actual` to have the same elements as [1, 2, 3], but it doesn't (contains unexpected element 4). Actual value: [1, 2, 3, …]");
         }
     }
 
@@ -88,7 +88,7 @@ public static class HaveSameElementsAsTests
         public void HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().HaveSameElementsAs(["hello", "world"]))
-                .Fails("Expected `Actual` to have the same elements as [\"hello\", \"world\"], but [(null), \"hello\", \"world\"] does not (contains unexpected element (null)).");
+                .Fails("Expected `Actual` to have the same elements as [\"hello\", \"world\"], but it doesn't (contains unexpected element (null)). Actual value: [(null), \"hello\", \"world\"]");
         }
     }
 
@@ -100,7 +100,7 @@ public static class HaveSameElementsAsTests
         public void HaveSameElementsAs_Should_Fail()
         {
             Verify.That(() => Actual.Should().HaveSameElementsAs([1, 2, 3]))
-                .Fails("Expected `Actual` to have the same elements as [1, 2, 3], but it is null.");
+                .Fails("Expected `Actual` to have the same elements as [1, 2, 3], but it is null. Actual value: (null)");
         }
 
         [Fact]

@@ -21,9 +21,9 @@ Note that `Should()` captures the expression that comes before it, so that it ca
 messages. So, for instance, the assertions above would produce messages like these if they were to fail:
 
 ```
-Expected `myObject` not to be null, but it is actually null.
-Expected `myObject.Id` to be equal to 42, but it is actually 0.
-Expected `myObject.Message` to start with "Hello", but "Bonjour le monde" doesn't.
+Expected `myObject` not to be null, but it is. Actual value: null
+Expected `myObject.Id` to be equal to 42, but it's not. Actual value: 0
+Expected `myObject.Message` to start with "Hello", but it doesn't. Actual value: "Goodbye"
 ```
 
 ## API flavors

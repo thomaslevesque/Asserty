@@ -17,8 +17,8 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(value => value is null)
             .ExpectValue("to be null")
-            .DescribeActual(actualValue => $"it is actually {Format(actualValue)}")
-            .DescribeActualWhenNegated(_ => "it is actually null");
+            .DescribeActual(_ => "it's not")
+            .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
 }

@@ -20,7 +20,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(actualValue => actualComparer.Compare(actualValue, otherValue) > 0)
             .ExpectValue($"to be greater than {Format(otherValue)}")
-            .DescribeActual(actualValue => $"{Format(actualValue)} is actually less than or equal to {Format(otherValue)}")
+            .DescribeActual(_ => $"it is less than or equal to {Format(otherValue)}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
@@ -41,7 +41,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(actualValue => actualComparer.Compare(actualValue, otherValue) >= 0)
             .ExpectValue($"to be greater than or equal to {Format(otherValue)}")
-            .DescribeActual(actualValue => $"{Format(actualValue)} is actually less than {Format(otherValue)}")
+            .DescribeActual(_ => $"it is less than {Format(otherValue)}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
@@ -62,7 +62,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(actualValue => actualComparer.Compare(actualValue, otherValue) < 0)
             .ExpectValue($"to be less than {Format(otherValue)}")
-            .DescribeActual(actualValue => $"{Format(actualValue)} is actually greater than or equal to {Format(otherValue)}")
+            .DescribeActual(_ => $"it is greater than or equal to {Format(otherValue)}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
@@ -83,7 +83,7 @@ public static partial class AssertionSubjectExtensions
         var assertion = AssertionBuilder.For<T>()
             .Verify(actualValue => actualComparer.Compare(actualValue, otherValue) <= 0)
             .ExpectValue($"to be less than or equal to {Format(otherValue)}")
-            .DescribeActual(actualValue => $"{Format(actualValue)} is actually greater than {Format(otherValue)}")
+            .DescribeActual(_ => $"it is greater than {Format(otherValue)}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }

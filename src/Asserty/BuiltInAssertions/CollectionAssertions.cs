@@ -20,9 +20,9 @@ public static partial class AssertionSubjectExtensions
             .DescribeActual(actualValue =>
             {
                 if (actualValue is null)
-                    return "it is actually null";
+                    return "it is null";
                 int count = actualValue.Count();
-                return $"{Format(actualValue)} contains {count} {Elements(count)}";
+                return $"it contains {count} {Elements(count)}";
             })
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
@@ -44,9 +44,9 @@ public static partial class AssertionSubjectExtensions
             .DescribeActual((actualValue, context) =>
             {
                 if (actualValue is null)
-                    return "it is actually null";
+                    return "it is null";
                 var actualCount = context.Get<int>("count");
-                return $"{Format(actualValue)} contains {actualCount} {Elements(actualCount)}";
+                return $"it contains {actualCount} {Elements(actualCount)}";
             })
             .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
@@ -122,17 +122,17 @@ public static partial class AssertionSubjectExtensions
 
                 if (context.TryGet("missingExpectedElement", out T missingExpectedElement))
                 {
-                    return $"{Format(actualValue)} does not (missing expected element {Format(missingExpectedElement)})";
+                    return $"it doesn't (missing expected element {Format(missingExpectedElement)})";
                 }
 
                 if (context.TryGet("unexpectedElement", out T unexpectedElement))
                 {
-                    return $"{Format(actualValue)} does not (contains unexpected element {Format(unexpectedElement)})";
+                    return $"it doesn't (contains unexpected element {Format(unexpectedElement)})";
                 }
 
                 // Should never reach here, since either missingExpectedElement or unexpectedElement should always be
                 // set when the assertion fails, but just in case, return a generic message.
-                return $"{Format(actualValue)} does not";
+                return "it doesn't";
             })
             .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
@@ -187,7 +187,7 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to be the same sequence as {Format(expectedSequence)}")
             .DescribeActual((actualValue, context) => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} differs at position {context.Get<int>("differencePosition")}")
+                : $"it differs at position {context.Get<int>("differencePosition")}")
             .DescribeActualWhenNegated(_ => "it is");
         return subject.Verify(assertion);
     }
@@ -213,8 +213,8 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to contain {Format(expectedElement)}")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} doesn't")
-            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+                : "it doesn't")
+            .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }
 
@@ -238,8 +238,8 @@ public static partial class AssertionSubjectExtensions
             .ExpectValue($"to contain an element matching `{predicateExpression}`")
             .DescribeActual(actualValue => actualValue is null
                 ? "it is null"
-                : $"{Format(actualValue)} doesn't")
-            .DescribeActualWhenNegated(actualValue => $"{Format(actualValue)} does");
+                : "it doesn't")
+            .DescribeActualWhenNegated(_ => "it does");
         return subject.Verify(assertion);
     }
 

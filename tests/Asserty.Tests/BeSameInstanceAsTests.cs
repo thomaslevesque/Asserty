@@ -21,7 +21,7 @@ public static class BeSameInstanceAsTests
             var value = new object();
             var other = value;
             Verify.That(() => value.Should().Not.BeSameInstanceAs(other))
-                .Fails($"Expected `value` not to be the same instance as {Format(other)}, but it is.");
+                .Fails($"Expected `value` not to be the same instance as {Format(other)}, but it is. Actual value: {Format(other)}");
         }
     }
 
@@ -33,7 +33,7 @@ public static class BeSameInstanceAsTests
             var value = new List<int> { 1, 2, 3 };
             var other = new List<int> { 1, 2, 3 };
             Verify.That(() => value.Should().BeSameInstanceAs(other))
-                .Fails($"Expected `value` to be the same instance as {Format(other)}, but it is a different instance: {Format(value)}.");
+                .Fails($"Expected `value` to be the same instance as {Format(other)}, but it's not. Actual value: {Format(value)}");
         }
 
         [Fact]
@@ -60,7 +60,7 @@ public static class BeSameInstanceAsTests
             object? value = null;
             var other = new object();
             Verify.That(() => value.Should().BeSameInstanceAs(other))
-                .Fails($"Expected `value` to be the same instance as {Format(other)}, but it is null.");
+                .Fails($"Expected `value` to be the same instance as {Format(other)}, but it's not. Actual value: (null)");
         }
     }
 }

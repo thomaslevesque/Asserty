@@ -16,7 +16,7 @@ public static class CollectionContainTests
         public void Not_Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.Contain(2))
-                .Fails("Expected `Actual` not to contain 2, but [1, 2, 3] does.");
+                .Fails("Expected `Actual` not to contain 2, but it does. Actual value: [1, 2, 3]");
         }
     }
 
@@ -28,7 +28,7 @@ public static class CollectionContainTests
         public void Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Contain(42))
-                .Fails("Expected `Actual` to contain 42, but [1, 2, 3] doesn't.");
+                .Fails("Expected `Actual` to contain 42, but it doesn't. Actual value: [1, 2, 3]");
         }
 
         [Fact]
@@ -52,7 +52,7 @@ public static class CollectionContainTests
         public void Not_Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.Contain("HELLO", StringComparer.OrdinalIgnoreCase))
-                .Fails("Expected `Actual` not to contain \"HELLO\", but [\"hello\", \"world\"] does.");
+                .Fails("Expected `Actual` not to contain \"HELLO\", but it does. Actual value: [\"hello\", \"world\"]");
         }
     }
 
@@ -64,7 +64,7 @@ public static class CollectionContainTests
         public void Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Contain("HELLO"))
-                .Fails("Expected `Actual` to contain \"HELLO\", but [\"hello\", \"world\"] doesn't.");
+                .Fails("Expected `Actual` to contain \"HELLO\", but it doesn't. Actual value: [\"hello\", \"world\"]");
         }
 
         [Fact]
@@ -88,7 +88,7 @@ public static class CollectionContainTests
         public void Not_Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.Contain((string?)null))
-                .Fails("Expected `Actual` not to contain (null), but [\"hello\", (null), \"world\"] does.");
+                .Fails("Expected `Actual` not to contain (null), but it does. Actual value: [\"hello\", (null), \"world\"]");
         }
     }
 
@@ -100,7 +100,7 @@ public static class CollectionContainTests
         public void Contain_Should_Fail()
         {
             Verify.That(() => Actual.Should().Contain(1))
-                .Fails("Expected `Actual` to contain 1, but it is null.");
+                .Fails("Expected `Actual` to contain 1, but it is null. Actual value: (null)");
         }
 
         [Fact]
@@ -124,7 +124,7 @@ public static class CollectionContainTests
         public void Not_Contain_WithPredicate_Should_Fail()
         {
             Verify.That(() => Actual.Should().Not.Contain(x => x > 2))
-                .Fails("Expected `Actual` not to contain an element matching `x => x > 2`, but [1, 2, 3] does.");
+                .Fails("Expected `Actual` not to contain an element matching `x => x > 2`, but it does. Actual value: [1, 2, 3]");
         }
     }
 
@@ -136,7 +136,7 @@ public static class CollectionContainTests
         public void Contain_WithPredicate_Should_Fail()
         {
             Verify.That(() => Actual.Should().Contain(x => x > 10))
-                .Fails("Expected `Actual` to contain an element matching `x => x > 10`, but [1, 2, 3] doesn't.");
+                .Fails("Expected `Actual` to contain an element matching `x => x > 10`, but it doesn't. Actual value: [1, 2, 3]");
         }
 
         [Fact]
@@ -154,7 +154,7 @@ public static class CollectionContainTests
         public void Contain_WithPredicate_Should_Fail()
         {
             Verify.That(() => Actual.Should().Contain(x => x > 0))
-                .Fails("Expected `Actual` to contain an element matching `x => x > 0`, but it is null.");
+                .Fails("Expected `Actual` to contain an element matching `x => x > 0`, but it is null. Actual value: (null)");
         }
 
         [Fact]

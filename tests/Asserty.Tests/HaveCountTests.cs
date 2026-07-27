@@ -1,4 +1,4 @@
-﻿namespace Asserty.Tests;
+namespace Asserty.Tests;
 
 public static class HaveCountTests
 {
@@ -16,7 +16,7 @@ public static class HaveCountTests
         public void Not_HaveCount_Should_Fail()
         {
             Verify.That(() => Collection.Should().Not.HaveCount(3))
-                .Fails("Expected `Collection` not to contain 3 elements, but it does.");
+                .Fails("Expected `Collection` not to contain 3 elements, but it does. Actual value: [1, 2, 3]");
         }
     }
 
@@ -28,7 +28,7 @@ public static class HaveCountTests
         public void HaveCount_Should_Fail()
         {
             Verify.That(() => Collection.Should().HaveCount(3))
-                .Fails("Expected `Collection` to contain 3 elements, but [1, 2, 3, …] contains 4 elements.");
+                .Fails("Expected `Collection` to contain 3 elements, but it contains 4 elements. Actual value: [1, 2, 3, …]");
         }
 
         [Fact]
@@ -46,7 +46,7 @@ public static class HaveCountTests
         public void HaveCount_Should_Fail()
         {
             Verify.That(() => Collection.Should().HaveCount(3))
-                .Fails("Expected `Collection` to contain 3 elements, but it is actually null.");
+                .Fails("Expected `Collection` to contain 3 elements, but it is null. Actual value: (null)");
         }
 
         [Fact]

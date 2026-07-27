@@ -16,7 +16,7 @@ public static class BeLessThanTests
         {
             const int value = 3;
             Verify.That(() => value.Should().Not.BeLessThan(5))
-                .Fails("Expected `value` not to be less than 5, but it is.");
+                .Fails("Expected `value` not to be less than 5, but it is. Actual value: 3");
         }
     }
 
@@ -27,7 +27,7 @@ public static class BeLessThanTests
         {
             const int value = 5;
             Verify.That(() => value.Should().BeLessThan(5))
-                .Fails("Expected `value` to be less than 5, but 5 is actually greater than or equal to 5.");
+                .Fails("Expected `value` to be less than 5, but it is greater than or equal to 5. Actual value: 5");
         }
 
         [Fact]
@@ -45,7 +45,7 @@ public static class BeLessThanTests
         {
             const int value = 10;
             Verify.That(() => value.Should().BeLessThan(5))
-                .Fails("Expected `value` to be less than 5, but 10 is actually greater than or equal to 5.");
+                .Fails("Expected `value` to be less than 5, but it is greater than or equal to 5. Actual value: 10");
         }
 
         [Fact]
@@ -70,7 +70,7 @@ public static class BeLessThanTests
         {
             const string value = "b";
             Verify.That(() => value.Should().BeLessThan("a", StringComparer.Ordinal))
-                .Fails("Expected `value` to be less than \"a\", but \"b\" is actually greater than or equal to \"a\".");
+                .Fails("Expected `value` to be less than \"a\", but it is greater than or equal to \"a\". Actual value: \"b\"");
         }
     }
 }
