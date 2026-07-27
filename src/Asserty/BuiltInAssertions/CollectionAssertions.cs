@@ -53,6 +53,54 @@ public static partial class AssertionSubjectExtensions
     }
 
     /// <summary>
+    /// Asserts that the subject's value contains at least the specified number of elements.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="count">The minimum number of elements expected in the collection</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> HaveAtLeast<T>(this IAssertionSubject<IEnumerable<T>?> subject, int count)
+    {
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify((actualValue, context) => context.Set("count", actualValue?.Count()) >= count)
+            .ExpectValue($"to contain at least {count} {Elements(count)}")
+            .DescribeActual((actualValue, context) =>
+            {
+                if (actualValue is null)
+                    return "it is null";
+                var actualCount = context.Get<int>("count");
+                return $"it only contains {actualCount} {Elements(actualCount)}";
+            })
+            .DescribeActualWhenNegated(_ => "it does");
+        return subject.Verify(assertion);
+    }
+
+    /// <summary>
+    /// Asserts that the subject's value contains at most the specified number of elements.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="count">The maximum number of elements expected in the collection</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> HaveAtMost<T>(this IAssertionSubject<IEnumerable<T>?> subject, int count)
+    {
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify((actualValue, context) => context.Set("count", actualValue?.Count()) <= count)
+            .ExpectValue($"to contain at most {count} {Elements(count)}")
+            .DescribeActual((actualValue, context) =>
+            {
+                if (actualValue is null)
+                    return "it is null";
+                var actualCount = context.Get<int>("count");
+                return $"it contains {actualCount} {Elements(actualCount)}";
+            })
+            .DescribeActualWhenNegated(_ => "it does");
+        return subject.Verify(assertion);
+    }
+
+    /// <summary>
     /// Asserts that the subject's value contains the same elements as the specified collection, in any order.
     /// Duplicate elements in the expected collection are expected to appear the same number of times in the actual
     /// collection.
