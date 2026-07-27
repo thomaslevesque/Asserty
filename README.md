@@ -56,7 +56,6 @@ whether a string is a palindrome, you could write an extension method like this:
 
 ```csharp
 using Asserty;
-using static Asserty.Assertions.AssertionValueFormatter;
 
 public static class StringAssertions
 {
@@ -65,8 +64,8 @@ public static class StringAssertions
         var assertion = AssertionBuilder.For<string?>()
             .Verify(s => s is not null && s == new string(s.Reverse().ToArray()))
             .ExpectValue("to be a palindrome")
-            .DescribeActual(actual => $"{Format(actual)} is not a palindrome")
-            .DescribeActualWhenNegated(actual => $"{Format(actual)} is a palindrome");
+            .DescribeActual(actual => $"it's not")
+            .DescribeActualWhenNegated(actual => $"it is");
         return subject.Verify(assertion);
     }
 }
@@ -79,14 +78,11 @@ public static class StringAssertions
   is not null and that it is equal to its reverse.
 - `ExpectValue()` specifies the description of the expectation. It will be used to build the assertion failure  message
   if the assertion fails, in this case ``Expected `something` to be a palindrome, but …``.
-- `DescribeActual()` specifies how to describe the actual value when the assertion fails. In this case, the failure
-  message will be something like ``Expected `something` to be a palindrome, but "hello" is not a palindrome``.
-- `Format()` is a helper method that formats the actual value for display in the assertion failure message. It handles
-  null values, adds appropriate quoting for strings, formats collections, etc. You can use it in your own assertions to
-  ensure consistent formatting of actual values.
-- `DescribeActualWhenNegated()` specifies how to describe the actual value when the assertion is negated (i.e. when
-  `Not` is used, as in `something.Should().Not.BeAPalindrome()`). In this case, we simply say that the string is a
-   palindrome, but depending on the assertion, you might want to provide better wording for the negated case.
+- `DescribeActual()` specifies how to describe the actual value when the assertion fails, following "but". In this case,
+ the failure message will be something like ``Expected `something` to be a palindrome, but it's not``.
+- `DescribeActualWhenNegated()` specifies how to describe the actual value when the negated assertion (i.e. when
+  `Not` is used, as in `something.Should().Not.BeAPalindrome()`) fails, following "but". In this case, we simply say
+  that the string is a palindrome, but in some cases, you might want to provide better wording for the negated case.
 - Finally, we call `subject.Verify(assertion)` to actually perform the assertion.
 
 The method could technically return `void`, but returning an `IAssertionResult<string?>` allows the caller to chain
