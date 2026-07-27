@@ -291,6 +291,50 @@ public static partial class AssertionSubjectExtensions
         return subject.Verify(assertion);
     }
 
+    /// <summary>
+    /// Asserts that all elements in the subject's value match the specified predicate.
+    /// </summary>
+    /// <param name="subject">The subject of the assertion</param>
+    /// <param name="predicate">The predicate that all elements must satisfy.</param>
+    /// <param name="predicateExpression">The expression text of the predicate (captured automatically by the compiler).</param>
+    /// <typeparam name="T">The type of the assertion subject's value.</typeparam>
+    /// <returns>An assertion result that can be used to chain other assertions, if successful.</returns>
+    /// <exception cref="AssertionException">The assertion failed.</exception>
+    public static IAssertionResult<IEnumerable<T>?> AllMatch<T>(
+        this IAssertionSubject<IEnumerable<T>?> subject,
+        Func<T, bool> predicate,
+        [CallerArgumentExpression(nameof(predicate))] string predicateExpression = null!)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        var assertion = AssertionBuilder.For<IEnumerable<T>?>()
+            .Verify((actualValue, context) =>
+            {
+                if (actualValue is null)
+                    return false;
+
+                var index = 0;
+                foreach (var element in actualValue)
+                {
+                    if (!predicate(element))
+                    {
+                        context.Set("nonMatchingElement", element);
+                        context.Set("nonMatchingElementIndex", index);
+                        return false;
+                    }
+
+                    index++;
+                }
+
+                return true;
+            })
+            .ExpectValue($"to contain only elements matching `{predicateExpression}`")
+            .DescribeActual((actualValue, context) => actualValue is null
+                ? "it is null"
+                : $"it contains non-matching element {Format(context.Get<T>("nonMatchingElement"))} at position {context.Get<int>("nonMatchingElementIndex")}")
+            .DescribeActualWhenNegated(_ => "it does");
+        return subject.Verify(assertion);
+    }
+
     private static string Elements(int count) => count > 1 ? "elements" : "element";
 
     private readonly record struct Box<TValue>(TValue Value);
