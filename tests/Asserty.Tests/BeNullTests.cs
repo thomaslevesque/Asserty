@@ -20,6 +20,24 @@ public static class BeNullTests
         }
     }
 
+    public class WhenNullableValueTypeIsNull
+    {
+        [Fact]
+        public void BeNull_Should_Pass()
+        {
+            int? value = null;
+            Verify.That(() => value.Should().BeNull()).Passes();
+        }
+
+        [Fact]
+        public void Not_BeNull_Should_Fail()
+        {
+            int? value = null;
+            Verify.That(() => value.Should().Not.BeNull())
+                .Fails("Expected `value` not to be null, but it is. Actual value: (null)");
+        }
+    }
+
     public class WhenValueIsNotNull
     {
         [Fact]
@@ -42,6 +60,31 @@ public static class BeNullTests
         {
             const string value = "hello";
             Verify.That(() => value.Should().Not.BeNull().And.Contain("ell")).Passes();
+        }
+    }
+
+    public class WhenNullableValueTypeIsNotNull
+    {
+        [Fact]
+        public void BeNull_Should_Fail()
+        {
+            int? value = 42;
+            Verify.That(() => value.Should().BeNull())
+                .Fails("Expected `value` to be null, but it's not. Actual value: 42");
+        }
+
+        [Fact]
+        public void Not_BeNull_Should_Pass()
+        {
+            int? value = 42;
+            Verify.That(() => value.Should().Not.BeNull()).Passes();
+        }
+
+        [Fact]
+        public void Not_BeNull_Can_Be_Chained_With_Other_Assertion()
+        {
+            int? value = 42;
+            Verify.That(() => value.Should().Not.BeNull().And.BeEqualTo(42)).Passes();
         }
     }
 }
