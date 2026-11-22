@@ -8,6 +8,9 @@
     <File Path=".github/workflows/build.yml" />
     <File Path=".github/workflows/release.yml" />
   </Folder>
+  <Folder Name="/docs/">
+    <File Path="docs/assertions.md" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Asserty/Asserty.csproj" />
   </Folder>

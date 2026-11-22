@@ -137,7 +137,13 @@ public static class YourAssertionNameTests
 - `Verify.That(lambda).Fails("exact message")` — asserts an `AssertionException` is thrown with that **exact** message
   (including the trailing period).
 
-## Step 4 — Run the tests
+## Step 4 — Update the assertion documentation
+
+Update `docs/assertions.md` to include the new built-in assertion. Add it under the appropriate category and document its
+subject type, behavior, and any overloads or important parameters. If an assertion introduces a new category, add a
+section for it.
+
+## Step 5 — Run the tests
 
 ```
 dotnet test

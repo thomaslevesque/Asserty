@@ -51,6 +51,10 @@ flavors.
 
 ## Extensibility
 
+Asserty provides a number of built-in assertions, which are documented [here](docs/assertions.md), but if you can't find
+the one you need, you can add your own! If you feel like it would also be useful to others, please open an issue to
+discuss adding it to the built-in assertions.
+
 Extending Asserty to add your own assertions is fairly easy. For example, if you wanted to add an assertion that checks
 whether a string is a palindrome, you could write an extension method like this:
 
