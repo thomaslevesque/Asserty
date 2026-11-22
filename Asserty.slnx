@@ -1,5 +1,9 @@
 <Solution>
   <Folder Name="/.github/" />
+  <Folder Name="/.github/skills/" />
+  <Folder Name="/.github/skills/add-assertion/">
+    <File Path=".github/skills/add-assertion/SKILL.md" />
+  </Folder>
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/build.yml" />
     <File Path=".github/workflows/release.yml" />

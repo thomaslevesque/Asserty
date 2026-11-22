@@ -1,21 +1,28 @@
 ---
 name: add-assertion
-description: 'Provides the step-by-step workflow for adding a new built-in assertion to the Asserty library, including the implementation pattern and test structure; use when asked to add or implement a new assertion.'
+description: >
+  Provides the step-by-step workflow for adding a new built-in assertion to the Asserty library, including the
+  implementation pattern and test structure; use when asked to add or implement a new assertion.
 ---
 
 ## Overview
 
-Asserty assertions are extension methods on `IAssertionSubject<T>` that live in the `static partial class AssertionSubjectExtensions` (namespace `Asserty`). Each assertion is built with a fluent `AssertionBuilder<T>` chain and requires no registration — the `partial class` pattern makes it automatically available after `.Should()`, `.To`, or `.Not.To`.
-
----
+Asserty assertions are extension methods on `IAssertionSubject<T>` that live in the `static partial class
+AssertionSubjectExtensions` (namespace `Asserty`). Each assertion is built with a fluent `AssertionBuilder<T>` chain and
+requires no registration — the `partial class` pattern makes it automatically available after `.Should()`, `.To`, or
+`.Not.To`.
 
 ## Step 1 — Create the source file
 
 **Location:** `src/Asserty/BuiltInAssertions/`
 
-- If the assertion naturally groups with others for the same subject type, add it to the existing file (e.g., `StringAssertions.cs`, `CollectionAssertions.cs`, `BooleanAssertions.cs`). Note that the assertion methods still belong to the `AssertionSubjectExtensions` class, whatever the file name is.
+- If the assertion naturally groups with others for the same subject type, add it to the existing file (e.g.,
+  `StringAssertions.cs`, `CollectionAssertions.cs`, `BooleanAssertions.cs`). Note that the assertion methods still
+  belong to the `AssertionSubjectExtensions` class, whatever the file name is.
 - Otherwise create a new file named after the assertion: `YourAssertionName.cs`.
-- Assertion methods typically start with a verb in the infinitive form (e.g. "Have", "Be", "Contain", etc.), because they need to be chained behind either `.Should()` or `Expect(...).To`. The point is to make the API read like natural language.
+- Assertion methods typically start with a verb in the infinitive form (e.g. "Have", "Be", "Contain", etc.), because
+  they need to be chained behind either `.Should()` or `Expect(...).To`. The point is to make the API read like natural
+  language.
 
 ```csharp
 // src/Asserty/BuiltInAssertions/YourAssertionName.cs
@@ -41,9 +48,9 @@ public static partial class AssertionSubjectExtensions
 
 **Notes:**
 - `Format()` is available in every source file without an import (global static using in `GlobalUsings.cs`).
-- If you need to share a computed value between `Verify` and `DescribeActual` (e.g., to avoid evaluating an enumerable twice), use the `(value, context)` overloads and `context.Set("key", computedValue)` / `context.Get<T>("key")`. See `CollectionAssertions.cs` → `HaveCount` for a concrete example.
-
----
+- If you need to share a computed value between `Verify` and `DescribeActual` (e.g., to avoid evaluating an enumerable
+  twice), use the `(value, context)` overloads and `context.Set("key", computedValue)` / `context.Get<T>("key")`. See
+  `CollectionAssertions.cs` → `HaveCount` for a concrete example.
 
 ## Step 2 — Understand the failure message format
 
@@ -65,13 +72,18 @@ Expected `value` not to be true, but it is.
 
 Keep this format in mind when writing test expectations.
 
----
+For the `DescribeActual` and `DescribeActualWhenNegated` parts of the failure message, keep it short and simple. In most
+cases, avoid repeating the expectation. For example, for `BeEqualTo(42)` on a value of `0`, the expectation is "to be
+equal to 42", so the actual value description can simply be "it's not" (rather than "it's not equal to 42"). Similarly
+for the negated case, the actual value description can simply be "it is" (rather than "it is equal to 42"). The goal is
+to make the failure message read naturally, without repeating the expectation.
 
 ## Step 3 — Create the test file
 
 **Location:** `tests/Asserty.Tests/YourAssertionNameTests.cs`
 
-Write one test file per assertion method group (i.e. overloads of the same assertion method can share the same test file), even if the implementations are grouped in a single file.
+Write one test file per assertion method group (i.e. overloads of the same assertion method can share the same test
+file), even if the implementations are grouped in a single file.
 
 Use nested classes to describe the actual value.
 
@@ -122,9 +134,8 @@ public static class YourAssertionNameTests
 
 **Test helpers:**
 - `Verify.That(lambda).Passes()` — asserts the assertion succeeds.
-- `Verify.That(lambda).Fails("exact message")` — asserts an `AssertionException` is thrown with that **exact** message (including the trailing period).
-
----
+- `Verify.That(lambda).Fails("exact message")` — asserts an `AssertionException` is thrown with that **exact** message
+  (including the trailing period).
 
 ## Step 4 — Run the tests
 
@@ -132,9 +143,13 @@ public static class YourAssertionNameTests
 dotnet test
 ```
 
-All existing tests must remain green. Add more `WhenValue…` nested classes for any additional edge cases (null inputs, boundary values, etc.).
+All existing tests must remain green. Add more `WhenValue…` nested classes for any additional edge cases (null inputs,
+boundary values, etc.).
 
----
+## Remarks
+
+Don't update the examples in the README.md file to add the new assertion. They're not meant to be an exhaustive list of
+all assertions, just a few examples to illustrate the syntax.
 
 ## Quick reference: real-world examples
 
